@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -31,21 +32,24 @@ public class Users {
 	private LocalDateTime datecrea;
 	private Integer userslinked;
 
+	private String photos;
+
 	private Set<UserRoles> useroles = new HashSet<UserRoles>(0);
 
 	public Users() {
 
 	}
+
 	public Users(Users user) {
 		this.firstname = user.firstname;
 		this.lastname = user.lastname;
-		this.password =  user.password;
-		this.zip= user.zip;
-		this.emailaddress =  user.emailaddress;
-		this.city= user.city;
-		this.bio=user.bio;
-		this.address=user.address;
-		
+		this.password = user.password;
+		this.zip = user.zip;
+		this.emailaddress = user.emailaddress;
+		this.city = user.city;
+		this.bio = user.bio;
+		this.address = user.address;
+
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(formatter.format(date));
@@ -56,7 +60,7 @@ public class Users {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
-		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		// DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(formatter.format(date));
 		this.datecrea = now;
@@ -72,44 +76,46 @@ public class Users {
 		// System.out.println(formatter.format(date));
 		this.datecrea = now;
 	}
-	
+
 	public Users(String firstname, String lastname, String password, String emailaddress, String city) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
 		this.emailaddress = emailaddress;
-		this.city=city;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		// System.out.println(formatter.format(date));
-		this.datecrea = now;
-	}
-	public Users(String firstname, String lastname, String password, String emailaddress, String city, String bio, String zip) {
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.password = password;
-		this.emailaddress = emailaddress;
-		this.zip=zip;
-		this.bio=bio;
-		this.city=city;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
-		// System.out.println(formatter.format(date));
-		this.datecrea = now;
-	}
-	public Users(String firstname, String lastname, String password, String emailaddress, String city, String zip) {
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.password = password;
-		this.zip=zip;
-		this.emailaddress = emailaddress;
-		this.city=city;
+		this.city = city;
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(formatter.format(date));
 		this.datecrea = now;
 	}
 
+	public Users(String firstname, String lastname, String password, String emailaddress, String city, String bio,
+			String zip) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.emailaddress = emailaddress;
+		this.zip = zip;
+		this.bio = bio;
+		this.city = city;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
+	}
+
+	public Users(String firstname, String lastname, String password, String emailaddress, String city, String zip) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.zip = zip;
+		this.emailaddress = emailaddress;
+		this.city = city;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
+	}
 
 	@Override
 	public String toString() {
@@ -131,6 +137,15 @@ public class Users {
 	@Column(name = "Password")
 	public String getPassword() {
 		return password;
+	}
+
+	@Column(name = "photos")
+	public String getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(String photos) {
+		this.photos = photos;
 	}
 
 	public void setPassword(String password) {
@@ -216,6 +231,14 @@ public class Users {
 
 	public void setUserslinked(Integer userslinked) {
 		this.userslinked = userslinked;
+	}
+
+	@Transient
+	public String getPhotosImagePath() {
+		if (photos == null ||  usersid == null)
+			return null;
+
+		return "/user-photos/" +  usersid + "/" + photos;
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "users")

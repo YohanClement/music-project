@@ -1,5 +1,6 @@
 package fr.formation.inti.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,9 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import fr.formation.inti.config.FileUploadUtil;
 import fr.formation.inti.model.UserRoles;
 import fr.formation.inti.model.Users;
 import fr.formation.inti.repository.UserRolesDAO;
@@ -66,12 +71,15 @@ public class AppController {
 	public String listUsers(Model model) {
 	    List<Users> listUsers = userRepo.findAll();
 	    model.addAttribute("listUsers", listUsers);
-	     
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    System.out.println(auth.getName());
+	    Users user = userRepo.findByEmail(auth.getName());
+	    model.addAttribute("user", user);
 	    return "listusers";
 	}
 	
 	@PostMapping("/process_register")
-	public String processRegister(Users user) {
+	public String processRegister(Users user, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		System.out.println(user);
 	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -80,9 +88,16 @@ public class AppController {
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(formatter.format(date));
 		user.setDatecrea(now);
-	    userRepo.save(user);
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        user.setPhotos(fileName);
+         
+	    Users savedUser =userRepo.save(user);
 	    UserRoles userrole =new UserRoles(user, "USER", user.getEmailaddress());
 	    rolesRepo.save(userrole);
+	    
+	    String uploadDir = "user-photos/" + savedUser.getUsersid();
+	    
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	    return "register_success";
 	}
 	
