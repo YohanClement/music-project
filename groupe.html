@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Groupe</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.js"></script>
+
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
+  <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="bandeau">
+
+    <nav class="navbar navbar-expand-lg navbar-light topright">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav">
+            <!-- home -->
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-home fa-2x"></i></a>
+            </li>
+            <!-- Messagerie visiteur -->
+            <li class="nav-item">
+              <a class="nav-link" href="chat.html"><i class="far fa-comments fa-2x"></i></a>
+            </li>
+            <!-- ajouter un événement   -->
+            <li class="nav-item">
+              <a class="nav-link" href="CreaEvent.html"><i class="far fa-calendar-plus fa-2x"></i></a>
+            </li>
+            <!-- Paramètres -->
+            <li class="nav-item">
+              <a class="nav-link" href="parameters.html"><i class="fas fa-sliders-h fa-2x"></i></a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="profile-picture">
+    </div>
+
+    <div class="titre">
+      <h1>Prénom Nom</h1>
+    </div>
+    <div class="btn-header">
+      <input class="btn btn-secondary" type="submit" value=" +Ajouter" href="#" />
+      <input class="btn btn-secondary " type="submit" value="Chatter" href="#" />
+    </div>
+  </header>
+
+  <!-- Main Content-->
+  <div class="corps px-4 px-lg-4">
+    <div class="row gx-4 gx-lg-4 justify-content-center">
+      <div class="col-md-8">
+        <!-- Nos réalisations-->
+        <div class="sidenav">
+          <h2 class="post-title">Nos réalisations</h2>
+          <figure>
+            <figcaption class="songtittle">Chanson</figcaption>
+            <audio class="audio" controls src="#">
+              <a href="/media/cc0-audio/t-rex-roar.mp3"> Download audio </a>
+            </audio>
+          </figure>
+          <figure>
+            <figcaption class="songtittle">Chanson bis</figcaption>
+            <audio class="audio" controls src="#">
+              <a href="/media/cc0-audio/t-rex-roar.mp3"> Download audio </a>
+            </audio>
+          </figure>
+          <figure>
+            <figcaption class="audio" class="songtittle">
+              Chanson ter
+            </figcaption>
+            <audio controls src="#">
+              <a href="/media/cc0-audio/t-rex-roar.mp3"> Download audio </a>
+            </audio>
+          </figure>
+          <hr class="my-4" />
+          <div class="post-preview">
+            <h2 class="post-title">Nos Membres</h2>
+            <div>
+              <a href="profil.html">
+                <img src="https://cdn.pixabay.com/photo/2016/11/21/13/36/man-1845432_960_720.jpg" class="rounded-circle"
+                  height="75" alt="card" image cap loading="lazy" />
+              </a>
+              <!--<button class="card-title">-->
+              <h6><a href="profil.html">Prénom Nom</a></h6>
+              <!-- </button>-->
+              <a href="profil.html">
+                <img src="https://cdn.pixabay.com/photo/2018/03/06/06/58/performance-3202707_960_720.jpg"
+                  class="rounded-circle" height="75" alt="card" image cap loading="lazy" />
+              </a>
+              <!--<button class="card-title">-->
+              <h6><a href="profil.html"></a>Prénom Nom</a></h6>
+              <!-- </button>-->
+            </div>
+          </div>
+          <hr class="my-4" />
+          <!-- Ce dont on joue-->
+          <div class="post-preview">
+            <h2 class="post-title">Nos genres de prédilection</h2>
+          </div>
+
+
+          <!-- Divider-->
+          <hr class="my-4" />
+
+        </div>
+        <!-- Dernières activités-->
+        <div class="card">
+          <h2 class="title">Nos dernières activités</h2>
+          <div class="card-Event">
+            <h5 class="card-title">Nom de l'évènement</h5>
+            <img src="https://cdn.pixabay.com/photo/2016/03/30/05/41/music-1290087_960_720.jpg" class="imgevent"
+              alt="img event" height="100" />
+            <br />
+            <button class="btn btn-secondary">
+              <h6>Voir plus</h6>
+            </button>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Nom de l'évènement</h5>
+            <img src="https://cdn.pixabay.com/photo/2016/03/30/05/41/music-1290087_960_720.jpg" class="imgevent"
+              alt="img event" height="100" />
+            <br />
+            <button class="btn btn-secondary">
+              <h6>Voir plus</h6>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+    </div>
+</body>
+
+</html>
