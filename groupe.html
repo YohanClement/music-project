@@ -52,7 +52,9 @@
 			</div>
 		</nav>
 
-		<div class="profile-picture"></div>
+		<div class="profile-picture">
+		<img th:src="@{${groupe.photosImagePath}}"/>
+		</div>
 
 		<div class="titre">
 			<h1 th:utext="${groupe.groupeName}"></h1>
@@ -107,9 +109,9 @@
 							Membres</h2>
 						<div th:each="member: ${NosMembres}" >
 							<a href="profil.html"> <img
-								th:src="@{${user.photosImagePath}}"
+								th:src="@{${member.photosImagePath}}"
 								alt="card" />
-							</a>
+							</a> 
 							<p class="nomprofil">
 								<a href="profil.html" th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">Prénom Nom</a>
 							</p>
