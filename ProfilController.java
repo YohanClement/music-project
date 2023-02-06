@@ -1,7 +1,9 @@
 package fr.formation.inti.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class ProfilController {
 	public String index (Model model, @RequestParam Integer id ) {
 
 		Users user1=userRepository.findById(id).get();
+		
+		// recupérer la liste des styles musicaux du profil
 		Set<UsersGenre> style= user1.getUsersGenres();
 		List<GenreMusic> genre = new ArrayList<GenreMusic>();
 		for (UsersGenre g : style) {
@@ -48,25 +52,41 @@ public class ProfilController {
 			genre.add(m);
 		}
 		
-		
+		//Récupérer la liste des instruments dont joue le profil et son niveau
 		Set<UsersInstruments> instrument = user1.getUsersInstrumentses();
-		List<Musicinstruments> list_instrument = new ArrayList<Musicinstruments>();
-		List<Integer> list_niveau = new ArrayList<Integer>();
+		Map<Musicinstruments, Integer> list_instru= new HashMap<Musicinstruments, Integer>();
 		for (UsersInstruments i : instrument) {
 			Integer id2 = i.getId().getInstrId();
 			Integer niveau=i.getNiveau();
-			System.out.print("id instrument : " +id2);
+		System.out.print("id instrument : " +id2);
 			System.out.println(" niveau : " + niveau);
-			list_niveau.add(niveau);
 			Musicinstruments instru = mir.findById(id2).get();
 			System.out.println("instrument : " + instru);
-			list_instrument.add(instru);
+			list_instru.put(instru, niveau);
 		}
+		
+		
+		
+		
+//		List<Musicinstruments> list_instrument = new ArrayList<Musicinstruments>();
+//		List<Integer> list_niveau = new ArrayList<Integer>();
+//		for (UsersInstruments i : instrument) {
+//			Integer id2 = i.getId().getInstrId();
+//			Integer niveau=i.getNiveau();
+//			System.out.print("id instrument : " +id2);
+//			System.out.println(" niveau : " + niveau);
+//			list_niveau.add(niveau);
+//			Musicinstruments instru = mir.findById(id2).get();
+//			System.out.println("instrument : " + instru);
+//			list_instrument.add(instru);
+//		}
 	
 		model.addAttribute("mesgenres", genre);
-		model.addAttribute("instruments", list_instrument);
-		model.addAttribute("user", user1);
+//		model.addAttribute("instruments", list_instrument);
 		
+		
+		model.addAttribute("user", user1);
+		model.addAttribute("liste",list_instru);
 		
 		return "profil";
 	}
