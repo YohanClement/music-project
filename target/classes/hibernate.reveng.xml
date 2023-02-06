@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="evenement"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="genre_groupe"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="genre_music"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="groupe"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="groupe_evenement"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="groupe_members"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="musicinstruments"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="users" match-catalog="bd_music_project"></table-filter>
+	<table-filter match-name="users_evenement"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="users_genre"
+		match-catalog="bd_music_project">
+	</table-filter>
+	<table-filter match-name="users_instruments"
+		match-catalog="bd_music_project">
+	</table-filter>
+</hibernate-reverse-engineering>
