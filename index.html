@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:utext="${message}"></h1>
+<a href="employee"> Liste des utilisateurs</a>
+<table th:if="${user}">
+<tr>
+
+<th>id</th>
+<th>Prénom</th>
+<th>Nom</th>
+
+</tr>
+
+
+<tr th:each="u:${user}">
+
+
+<td th:utext="${u.usersId}"></td>
+<td th:utext="${u.usersFirstName}"></td>
+<td th:utext="${u.usersLastName}"></td>
+</tr>
+</table>
+
+<a href="profil?id=4"> Profil Ami</a>
+</body>
+</html>
