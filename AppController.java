@@ -22,8 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import fr.formation.inti.config.FileUploadUtil;
 import fr.formation.inti.model.UserRoles;
 import fr.formation.inti.model.Users;
+import fr.formation.inti.model.UsersInstru;
+import fr.formation.inti.repository.InstrumentsDAO;
 import fr.formation.inti.repository.UserRolesDAO;
 import fr.formation.inti.repository.UsersDAO;
+import fr.formation.inti.repository.UsersInstruDAO;
 
 @Controller
 public class AppController {
@@ -32,6 +35,10 @@ public class AppController {
 	private UsersDAO userRepo;
 	@Autowired
 	private UserRolesDAO rolesRepo;
+	@Autowired
+	private InstrumentsDAO instrRepo;
+	@Autowired
+	private UsersInstruDAO uInstrRepo;
 	
 	private boolean isAuthenticated() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -79,7 +86,7 @@ public class AppController {
 	}
 	
 	@PostMapping("/process_register")
-	public String processRegister(Users user, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+	public String processRegister(Users user,@RequestParam("instruments") List<String> instruments, @RequestParam("niveau") Integer niveau, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		System.out.println(user);
 	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -90,10 +97,14 @@ public class AppController {
 		user.setDatecrea(now);
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         user.setPhotos(fileName);
-         
+        
 	    Users savedUser =userRepo.save(user);
 	    UserRoles userrole =new UserRoles(user, "USER", user.getEmailaddress());
 	    rolesRepo.save(userrole);
+	    
+	    
+	    UsersInstru uInst = new UsersInstru(savedUser, instrRepo.findByinstrname(instruments.get(0)), niveau);
+	    uInstrRepo.save(uInst);
 	    
 	    String uploadDir = "user-photos/" + savedUser.getUsersid();
 	    

@@ -44,6 +44,7 @@
 								class="fas fa-home fa-2x"></i></a></li>
 					</ul>
 				</div>
+				</div>
 		</nav>
 
 
@@ -57,7 +58,8 @@
 
 	<div class="body">
 		<form th:action="@{/process_register}" th:object="${user}"
-			method="post" enctype="multipart/form-data"> <!-- enctype =lé moultimédia -->
+			method="post" enctype="multipart/form-data">
+			<!-- enctype =lé moultimédia -->
 			<div class="container">
 				<div class="row gx-5 gx-lg-8 justify-content-center">
 					<div class="col-lg-9">
@@ -79,24 +81,23 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="" class="form-label">Adresse
-									Mail</label> <input type="email" class="form-control"
-									name="emailaddress" aria-describedby="emailHelp" required />
+								<label for="" class="form-label">Adresse Mail</label> <input
+									type="email" class="form-control" name="emailaddress"
+									aria-describedby="emailHelp" required />
 								<div id="emailHelp" class="form-text">Votre adresse est
 									confidentielle, nous ne la partageons pas</div>
 							</div>
 							<div class="mb-3">
-								<label class="form-label">Mot de
-									passe</label> <input type="password" name="password"
-									class="form-control" aria-describedby="passwordHelpBlock"
-									required />
+								<label class="form-label">Mot de passe</label> <input
+									type="password" name="password" class="form-control"
+									aria-describedby="passwordHelpBlock" required />
 								<div id="passwordHelpBlock" class="form-text">Your
 									password must be 8-20 characters long, contain letters and
 									numbers, and must not contain spaces, special characters, or
 									emoji.</div>
 							</div>
-							<label for="password" class="form-label">Confirmation
-								du mot de passe</label> <input class="form-control" type="password"
+							<label for="password" class="form-label">Confirmation du
+								mot de passe</label> <input class="form-control" type="password"
 								name="password2" aria-describedby="passwordHelpBlock" />
 
 							<div>
@@ -118,39 +119,51 @@
 								type="file" name="image" accept="image/png, image/jpeg" /> <br />
 							<br />
 						</div>
-		</form>
-	</div>
-	<hr />
-	<!--             <div class="post-preview">
-              <h2>De quoi jouez vous ?</h2>
 
-              <select class="form-select" name="activity">
-                <option value="1" selected="true">Piano</option>
-                <option value="2">Guitare</option>
-                <option value="3">Flutte</option>
-                <option value="4">MAO</option>
-                <option value="5">Violon</option>
-                <option value="6">Autre: préciser</option>
-              </select>
+					</div>
+					<hr />
+					<div class="post-preview">
+						<h2>De quoi jouez vous ?</h2>
 
-              <label class="form-label" for="file"
-                >Quel est votre niveau ?</label
-              >
-              <input
-                class="form-check-input"
-                type="radio"
-                name="exe"
-                value="1"
-              />Débutant <input type="radio" name="exe" value="2" />Initié
-              <input type="radio" name="exe" value="3" />Intermédiaire
-              <input type="radio" name="exe" value="4" />Bon
-              <input type="radio" name="exe" value="5" />Avancé
-            </div>
+						<select class="form-select" name="instruments">
+							<option value="Piano" selected="true">Piano</option>
+							<option value="Guitare">Guitare</option>
+							<option value="Flûte">Flutte</option>
+							<option value="MAO">MAO</option>
+							<option value="Violon">Violon</option>
+							<option value="Autre">Autre: préciser</option>
+						</select> <label class="form-label" for="file">Quel
+							est votre niveau ?</label> <input class="form-check-input" type="radio"
+							name="niveau" value="1" />Débutant <input
+							type="radio" name="niveau" value="2" />Initié <input
+							type="radio" name="niveau" value="3" />Intermédiaire <input
+							type="radio" name="niveau" value="4" />Bon <input type="radio"
+							name="niveau" value="5" />Avancé
+					</div>
+					
+					<div class="post-preview">
+						<h2>De quoi jouez vous ?</h2>
 
-            <h2>Votre playlist</h2>
-         
+						<select class="form-select" name="instruments">
+							<option value="Piano" selected="true">Piano</option>
+							<option value="Guitare">Guitare</option>
+							<option value="Flûte">Flutte</option>
+							<option value="MAO">MAO</option>
+							<option value="Violon">Violon</option>
+							<option value="Autre">Autre: préciser</option>
+						</select> <label class="form-label" for="file">Quel
+							est votre niveau ?</label> <input class="form-check-input i" type="radio"
+							name="niveau" value="1" />Débutant <input
+							type="radio" name="niveau" value="2" />Initié <input
+							type="radio" name="niveau" value="3" />Intermédiaire <input
+							type="radio" name="niveau" value="4" />Bon <input type="radio"
+							name="niveau" value="5" />Avancé
+					</div>
 
-            <form method="post" enctype="multipart/form-data">
+					<h2>Votre playlist</h2>
+
+
+					<!--       <form method="post" enctype="multipart/form-data">
               <div>
                 <label class="form-label" for="file"
                   >Sélectionner un fichier</label
@@ -166,13 +179,13 @@
                   Envoyer</button
                 ><br /><br />
               </div>
-            </form>  -->
-	<button class="btn btn-primary" type="submit">Créer le profil
-	</button>
+            </form> -->
+					<button class="btn btn-primary" type="submit">Créer le
+						profil</button>
+				</div>
+			</div>
+		</form>
 	</div>
-	</div>
-	</div>
-	</form>
-	</div>
+	
 </body>
 </html>
