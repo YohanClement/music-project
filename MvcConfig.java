@@ -1,4 +1,6 @@
-package fr.formation.inti;
+
+package fr.formation.inti.config;
+
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +15,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		exposeDirectory("groupe-photos", registry);
+		exposeDirectory("user-photos", registry);
 	}
 
 	private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
