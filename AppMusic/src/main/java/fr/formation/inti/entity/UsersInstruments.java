@@ -1,11 +1,11 @@
 package fr.formation.inti.entity;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,33 +17,41 @@ import javax.persistence.Table;
 @Table(name = "users_instruments", catalog = "bd_music_project")
 public class UsersInstruments implements java.io.Serializable{
 	
-	private UsersInstrumentsId id;
+	private Integer userInstrumentId;
 	private Musicinstruments musicinstruments;
 	private Users users;
+	private Integer niveau;
 
 	public UsersInstruments() {
 	}
 
-	public UsersInstruments(UsersInstrumentsId id, Musicinstruments musicinstruments, Users users) {
-		this.id = id;
+	public UsersInstruments(Integer userInstrumentId, Musicinstruments musicinstruments, Users users) {
+		this.userInstrumentId = userInstrumentId;
 		this.musicinstruments = musicinstruments;
 		this.users = users;
 	}
 
-	@EmbeddedId
-
-	@AttributeOverrides({ @AttributeOverride(name = "usersId", column = @Column(name = "Users_id", nullable = false)),
-			@AttributeOverride(name = "instrId", column = @Column(name = "Instr_id", nullable = false)) })
-	public UsersInstrumentsId getId() {
-		return this.id;
+	public UsersInstruments(Users users, Musicinstruments musicinstruments,  Integer niveau) {
+		super();
+		this.users = users;
+		this.musicinstruments = musicinstruments;
+		this.niveau = niveau;
+	}
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "users_instrument_id")
+	public Integer getUserInstrumentId() {
+		return userInstrumentId;
 	}
 
-	public void setId(UsersInstrumentsId id) {
-		this.id = id;
+	public void setUserInstrumentId(Integer userInstrumentId) {
+		this.userInstrumentId = userInstrumentId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Instr_id", nullable = false, insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "Instr_id")
 	public Musicinstruments getMusicinstruments() {
 		return this.musicinstruments;
 	}
@@ -52,8 +60,8 @@ public class UsersInstruments implements java.io.Serializable{
 		this.musicinstruments = musicinstruments;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Users_id", nullable = false, insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name="Users_id")
 	public Users getUsers() {
 		return this.users;
 	}
@@ -61,5 +69,16 @@ public class UsersInstruments implements java.io.Serializable{
 	public void setUsers(Users users) {
 		this.users = users;
 	}
+
+	@Column(name = "Niveau")
+	public Integer getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Integer niveau) {
+		this.niveau = niveau;
+	}
+	
+	
 
 }

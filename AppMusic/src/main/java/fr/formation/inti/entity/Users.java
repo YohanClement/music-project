@@ -1,18 +1,22 @@
 package fr.formation.inti.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -31,8 +35,12 @@ public class Users implements java.io.Serializable {
 	private String usersBio;
 	private String usersZip;
 	private String usersCity;
-	private Date usersDateCrea;
+	private LocalDateTime usersDateCrea;
+	private String photos;
 	private Integer usersLinkedAccountsNmbr;
+	
+	
+	private Set<UserRoles> useroles = new HashSet<UserRoles>(0);
 	private Set<UsersGenre> usersGenres = new HashSet<UsersGenre>(0);
 	private Set<UsersEvenement> usersEvenements = new HashSet<UsersEvenement>(0);
 	private Set<UsersInstruments> usersInstrumentses = new HashSet<UsersInstruments>(0);
@@ -43,7 +51,7 @@ public class Users implements java.io.Serializable {
 	public Users() {
 	}
 
-	public Users(String password, String usersFirstName, String usersLastName, String usersEmail, Date usersDateCrea) {
+	public Users(String password, String usersFirstName, String usersLastName, String usersEmail, LocalDateTime usersDateCrea) {
 		this.password = password;
 		this.usersFirstName = usersFirstName;
 		this.usersLastName = usersLastName;
@@ -52,7 +60,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	public Users(String password, String usersFirstName, String usersLastName, String usersAdress, String usersEmail,
-			String usersBio, String usersZip, String usersCity, Date usersDateCrea, Integer usersLinkedAccountsNmbr,
+			String usersBio, String usersZip, String usersCity, LocalDateTime usersDateCrea, Integer usersLinkedAccountsNmbr,
 			Set<UsersGenre> usersGenres, Set<UsersEvenement> usersEvenements, Set<UsersInstruments> usersInstrumentses,
 			Set<Evenement> evenements, Set<Groupe> groupes, Set<GroupeMembers> groupeMemberses) {
 		this.password = password;
@@ -94,7 +102,7 @@ public class Users implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "Users_first_name", nullable = false, length = 500)
+	@Column(name = "Users_firstname", nullable = false, length = 500)
 	public String getUsersFirstName() {
 		return this.usersFirstName;
 	}
@@ -103,7 +111,7 @@ public class Users implements java.io.Serializable {
 		this.usersFirstName = usersFirstName;
 	}
 
-	@Column(name = "Users_last_name", nullable = false, length = 500)
+	@Column(name = "Users_lastname", nullable = false, length = 500)
 	public String getUsersLastName() {
 		return this.usersLastName;
 	}
@@ -157,14 +165,14 @@ public class Users implements java.io.Serializable {
 		this.usersCity = usersCity;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Users_date_crea", nullable = false, length = 19)
-	public Date getUsersDateCrea() {
+	public LocalDateTime getUsersDateCrea() {
 		return this.usersDateCrea;
 	}
 
-	public void setUsersDateCrea(Date usersDateCrea) {
-		this.usersDateCrea = usersDateCrea;
+	public void setUsersDateCrea(LocalDateTime now) {
+		this.usersDateCrea = now;
 	}
 
 	@Column(name = "Users_Linked_Accounts_Nmbr")
@@ -226,8 +234,35 @@ public class Users implements java.io.Serializable {
 		return this.groupeMemberses;
 	}
 
+	
 	public void setGroupeMemberses(Set<GroupeMembers> groupeMemberses) {
 		this.groupeMemberses = groupeMemberses;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+	public Set<UserRoles> getUseroles() {
+		return useroles;
+	}
+
+	public void setUseroles(Set<UserRoles> useroles) {
+		this.useroles = useroles;
+	}
+
+	@Column(name = "photos")
+	public String getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(String photos) {
+		this.photos = photos;
+	}
+	
+	@Transient
+	public String getPhotosImagePath() {
+		if (photos == null ||  usersId == null)
+			return null;
+
+		return "/user-photos/" +  usersId + "/" + photos;
 	}
 
 }

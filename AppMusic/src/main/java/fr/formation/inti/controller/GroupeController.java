@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import fr.formation.inti.entity.AudioGroupe;
 import fr.formation.inti.entity.GenreGroupe;
 import fr.formation.inti.entity.GenreMusic;
 import fr.formation.inti.entity.Groupe;
@@ -58,8 +59,17 @@ public class GroupeController {
 
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		groupe.setPhotos(fileName);
+		System.out.println("nom du fileName:"+fileName);
 
+		if ("".equals(fileName)) {
+			groupe.setPhotos(null);
+		}
+		System.out.println("photos après :"+groupe.getPhotos());
+		
+		
 		Groupe savedGroupe = grouperep.save(groupe);
+		
+		
 		
 		//ppur creer le chemin de la photo
 		String uploadDir = "groupe-photos/" + savedGroupe.getGroupeId();
@@ -72,7 +82,7 @@ public class GroupeController {
 	
 	@GetMapping("/groupe")
 	public String viewgrouppage(Model model) {
-		Groupe gr = grouperep.findById(63).get();
+		Groupe gr = grouperep.findById(37).get();
 		Set<GenreGroupe> style = gr.getGenreGroupes();
 		List<GenreMusic> genre = new ArrayList<GenreMusic>();
 		for (GenreGroupe g : style) {
@@ -87,7 +97,13 @@ public class GroupeController {
 			Integer id = user.getId().getUsersMembers();
 			Users u = ur.findById(id).get();
 			members.add(u);
-		}	
+		}
+		
+		Set<AudioGroupe> ag = gr.getAudioGroupes();
+		
+//		for (AudioGroupe sono : ag) {
+//			String a = sono.getAudioName();
+//		}
 		
 		model.addAttribute("groupe", gr);
 		model.addAttribute("NosGenres", genre);

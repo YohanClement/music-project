@@ -37,6 +37,7 @@ public class Groupe implements java.io.Serializable{
 	private String groupeTypeMusique;
 	
 	private String photos;
+	private Set<AudioGroupe> audioGroupes = new HashSet<AudioGroupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
 	private Set<GroupeEvenement> groupeEvenements = new HashSet<GroupeEvenement>(0);
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
@@ -216,4 +217,15 @@ public class Groupe implements java.io.Serializable{
 	public void setGenreGroupes(Set<GenreGroupe> genreGroupes) {
 		this.genreGroupes = genreGroupes;
 	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
+	public Set<AudioGroupe> getAudioGroupes() {
+		return audioGroupes;
+	}
+
+	public void setAudioGroupes(Set<AudioGroupe> audioGroupes) {
+		this.audioGroupes = audioGroupes;
+	}
+	
+	
 }
