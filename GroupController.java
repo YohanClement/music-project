@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import fr.formation.inti.entity.AudioGroupe;
 import fr.formation.inti.entity.GenreGroupe;
 import fr.formation.inti.entity.GenreMusic;
 import fr.formation.inti.entity.Groupe;
@@ -49,10 +51,24 @@ public class GroupController {
 			members.add(u);
 		}
 		
+		Set<AudioGroupe> ag = gr.getAudioGroupes();
+		
+		for (AudioGroupe sono : ag) {
+			String a = sono.getAudioName();
+		}
+		
 		model.addAttribute("groupe", gr);
 		model.addAttribute("NosGenres", genre);
 		model.addAttribute("NosMembres", members);
 		return "groupe";
 	}
+	
+	@GetMapping("/member/{id}")
+	public String Viewmember(@PathVariable("id") Integer id, Model model) {
+		Users member = ur.findById(id).get();
+		model.addAttribute("user", member);
+		return "";
+	}
+	
 
 }

@@ -53,17 +53,18 @@
 		</nav>
 
 		<div class="profile-picture">
-		<img th:src="@{${groupe.photosImagePath}}"/>
-		</div>
+			<div th:if="${groupe.photos} != null">
+				<img th:src="@{${groupe.photosImagePath}}" /></div>
+			</div>
 
-		<div class="titre">
-			<h1 th:utext="${groupe.groupeName}"></h1>
-		</div>
-		<div class="btn-header">
-			<a href="#"> <input class="btn btn-secondary" type="submit"
-				value=" +Ajouter" /></a> <a href="#"><input
-				class="btn btn-secondary " type="submit" value="Chatter" /></a>
-		</div>
+			<div class="titre">
+				<h1 th:utext="${groupe.groupeName}"></h1>
+			</div>
+			<div class="btn-header">
+				<a href="#"> <input class="btn btn-secondary" type="submit"
+					value=" +Ajouter" /></a> <a href="#"><input
+					class="btn btn-secondary " type="submit" value="Chatter" /></a>
+			</div>
 	</header>
 
 	<div class="body">
@@ -75,26 +76,11 @@
 							<h2
 								class="d-flex align-items-center text-decoration-none border-bottom">Nos
 								réalisations</h2>
-							<figure>
-								<figcaption class="songtittle">Chanson</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio></a>
+							 <figure th:each="audio: ${groupe.audioGroupes}">
+								<figcaption class="songtittle" >Chanson</figcaption>
+								<!-- <audio class="audio" controls
+									th:src="@{${audio.audioName}}" ></audio> --><p th:utext="${audio.audioName}"></p>
 							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson bis</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio>
-								</a>
-							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson ter</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"><audio
-										class="audio" controls src="#">
-									</audio></a>
-							</figure>
-
 							<div class="post-preview">
 								<h2
 									class="d-flex align-items-center text-decoration-none border-bottom">Nos
@@ -107,15 +93,16 @@
 						<h2
 							class="d-flex align-items-center text-decoration-none border-bottom">Nos
 							Membres</h2>
-						<div th:each="member: ${NosMembres}" >
+						<div th:each="member: ${NosMembres}">
 							<a href="profil.html"> <img
-								th:src="@{${member.photosImagePath}}"
-								alt="card" />
-							</a> 
+								th:src="@{${member.photosImagePath}}" alt="card" />
+							</a>
 							<p class="nomprofil">
-								<a href="profil.html" th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">Prénom Nom</a>
+								<a href="profil.html"
+									th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">Prénom
+									Nom</a>
 							</p>
-						<!-- 	<a href="profil.html"> <img
+							<!-- 	<a href="profil.html"> <img
 								src="https://cdn.pixabay.com/photo/2018/03/06/06/58/performance-3202707_960_720.jpg"
 								alt="card" />
 							</a>

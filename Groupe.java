@@ -33,7 +33,7 @@ public class Groupe implements java.io.Serializable {
 	private String groupeDescription;
 	private Byte groupeIsRecruting;
 	private String photos;
-	private String audio;
+	private Set<AudioGroupe> audioGroupes = new HashSet<AudioGroupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
 	private Set<GroupeEvenement> groupeEvenements = new HashSet<GroupeEvenement>(0);
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
@@ -172,16 +172,16 @@ public class Groupe implements java.io.Serializable {
 	public void setPhotos(String photos) {
 		this.photos = photos;
 	}
-
-	@Column(name = "audio", length = 45)
-	public String getAudio() {
-		return audio;
-	}
-
-	public void setAudio(String audio) {
-		this.audio = audio;
-	}
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
+	public Set<AudioGroupe> getAudioGroupes() {
+		return audioGroupes;
+	}
+
+	public void setAudioGroupes(Set<AudioGroupe> audioGroupes) {
+		this.audioGroupes = audioGroupes;
+	}
+
 	@Transient
 	public String getPhotosImagePath() {
 		if (photos == null ||  groupeId == null)
@@ -189,5 +189,13 @@ public class Groupe implements java.io.Serializable {
 
 		return "/groupe-photos/" +  groupeId + "/" + photos;
 	}
+	
+//	@Transient
+//	public String getAudioPath() {
+//		if (audio == null ||  groupeId == null)
+//			return null;
+//
+//		return "/groupe-audio/" +  groupeId + "/" + photos;
+//	}
 
 }
