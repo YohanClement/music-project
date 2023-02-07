@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title
+	th:utext="'Profil ' + ${user.usersFirstName} + ' ' + ${user.usersLastName}">Profil</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+	crossorigin="anonymous"></script>
+<link th:href="@{/styles.css}" rel="stylesheet" />
+<!--     <link href="/styles.css" rel="stylesheet" /> -->
+</head>
+
+<body>
+	<header class="bandeau">
+
+		<nav class="navbar navbar-expand-lg navbar-light topright">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+					aria-controls="navbarResponsive" aria-expanded="false"
+					aria-label="Toggle navigation">
+					Menu <i class="fas fa-bars"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav">
+						<!-- home -->
+						<li class="nav-item"><a class="nav-link" href="#"><i
+								class="fas fa-home fa-2x"></i></a></li>
+						<!-- Messagerie visiteur -->
+						<li class="nav-item"><a class="nav-link" href="chat.html"><i
+								class="far fa-comments fa-2x"></i></a></li>
+						<!-- ajouter un événement   -->
+						<li class="nav-item"><a class="nav-link"
+							href="CreaEvent.html"><i class="far fa-calendar-plus fa-2x"></i></a>
+						</li>
+						<!-- Paramètres -->
+						<li class="nav-item"><a class="nav-link"
+							href="parameters.html"><i class="fas fa-sliders-h fa-2x"></i></a>
+						</li>
+					</ul>
+				</div>
+		</nav>
+
+	<div class="profile-picture">
+		 <div th:if="${user.photos} != null">  
+		<img th:src="@{${user.photosImagePath}}" alt=imgProfil/>
+		 </div> 
+		</div> 
+
+		<div class="titre">
+			<h1 th:utext="${user.usersFirstName} + ' ' + ${user.usersLastName}">Prénom
+				Nom</h1>
+		</div>
+	   <div class="btn-header">
+            <input class="btn btn-secondary" type="submit" value=" +Ajouter"  />
+            <input class="btn btn-secondary " type="submit" value="Chatter" />
+        </div> 
+
+
+
+	</header>
+
+	<div class="body">
+		<div class="row justify-content-center">
+			<div class="col-md-12 col-lg-11">
+				<div class="sidenav">
+					<div class="contenue">
+						<h3
+							class="d-flex align-items-center link-dark text-decoration-none border-bottom">
+							Mes réalisations</h3>
+                        
+                        <figure>
+								<figcaption class="songtittle">Chanson</figcaption>
+								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
+										class="audio" controls src="#">
+									</audio></a>
+							</figure>
+							<figure>
+								<figcaption class="songtittle">Chanson bis</figcaption>
+								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
+										class="audio" controls src="#">
+									</audio>
+								</a>
+							</figure>
+							<figure>
+								<figcaption class="songtittle">Chanson ter</figcaption>
+								<a href="/media/cc0-audio/t-rex-roar.mp3"><audio
+										class="audio" controls src="#">
+									</audio></a>
+							</figure>
+						<hr class="my-2">
+
+						<div class="col">
+							<h3 class="post-title">Gouts musicaux</h3>
+							<ul th:each="genre: ${mesgenres}">
+								<li th:utext="${genre.genreName}">Classique</li>
+
+							</ul>
+						</div>
+
+						<hr class="my-2" />
+
+						<div class="post-preview row">
+							<h3 class="post-title">Je joue du :</h3>
+						</div>
+
+						<table>
+							<tr>
+
+								<th></th>
+								<th></th>
+
+
+							</tr>
+							<tr th:each="instru: ${liste}">
+
+
+								<td th:utext="${instru.key.instrName}+ ' ' + ' '"></td>
+								
+								<td th:if="${instru.value} == 1"> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 2"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </td>
+								<td th:if="${instru.value} == 3"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  <span class="fa fa-star"></span><span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 4"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span> <span class="fa fa-star"></span> </td>
+								<td th:if="${instru.value} == 5"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  </td>
+								
+								
+								<!-- <td th:utext="${instru.value}"> </td> -->
+
+								<!-- 							<tr th:each="instru: ${instruments}">
+
+
+								<td th:utext="${instru.instrName}"></td>
+
+								<td><span class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+									<span class="fa fa-star"></span></td>
+							</tr> -->
+						</table>
+
+					</div>
+				</div>
+				<div class="card description">
+					<h2>Me découvrir</h2>
+					<p th:utext="${user.usersBio}">
+						Grande amatrice de flute a bec, je pratique tous les jours. je
+						participe a de nombreux évènements afin de faire connaître cet
+						instrument qui pendant longtemps fut laissé dans l'oubli. Je joue
+						également du piano depuis mon enfance et je sui capable de jouer
+						la plupârt des grands morceaux classiques comme le requiem dert ou
+						la 4eme symphonie de Beethoven.
+
+
+						<!--           Modal -->
+					<div class="modal fade" id="modelId" tabindex="-1" role="dialog"
+						aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog modal-sm" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">sm</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">Body</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					</p>
+				</div>
+
+				<h2 style="margin-bottom: 1rem;">Récemment</h2>
+
+				<div class="grid-container">
+					<div class="grid-item">
+						<div class="card h-100">
+							<h5 class="card-header">
+								<a href="Event.html">Concert lyrique à l'opéra de Blois</a>
+							</h5>
+							<img class="card-img-top rounded mx-auto"
+								src="https://france3-regions.francetvinfo.fr/image/wu4r-OS14-4n6u19v-Qwg9dvLW8/600x400/regions/2022/11/08/636a75537c518_opera-loges-lumiere.jpg"
+								alt="Event image">
+							<div class="card-body">
+								<p class="card-text">Concert de l'orchestre symphopnique de
+									la ville de Nantes dans le cadre magnifique de l'opéa royale de
+									Blois</p>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Last updated 3 mins ago</small>
+							</div>
+						</div>
+					</div>
+					<div class="grid-item">
+						<div class="card h-100">
+							<h5 class="card-header">
+								<a href="Event.html">Concert Jazz, Lamotte-Beuvrons</a>
+							</h5>
+							<img class="card-img-top rounded mx-auto"
+								src="https://www.reserverunbar.fr/images/etab/1671795471_63a5930f49511_m.jpg"
+								alt="Event image">
+							<div class="card-body">
+								<p class="card-text">Concert incroyable organisé pour
+									célébré la nouvelle année. On a fait dansé le bar du village
+									jusqu'à l'aurore sur des airs endiablés</p>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Last updated 8 hours ago</small>
+							</div>
+						</div>
+					</div>
+					<div class="grid-item">
+						<div class="card h-100">
+							<h5 class="card-header">
+								<a href="Event.html">Foire aux Jambons de Quimper</a>
+							</h5>
+							<img class="card-img-top rounded mx-auto"
+								src="https://www.vallet.fr/wp-content/uploads/tribe_events/bonnefontaine.jpg"
+								alt="Event image">
+							<div class="card-body">
+								<p class="card-text">This is a wider card with supporting
+									text below as a natural lead-in to additional content. This
+									card has even longer content than the first to show that equal
+									height action.</p>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Last updated 2 months ago</small>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<input class="btn btn-outline-danger" type="button"
+					value="Voir plus" />
+				<h2 style="margin-bottom: 1rem;">Vos contacts</h2>
+				<div class=" grid-container2">
+					<div class="grid-item">
+						<div class="card h-100">
+							<img
+								src="https://m.onisep.fr/var/onisep/storage/images/_aliases/vignette_search_mobile/media/images/metier_fiches-ideo/musicien/17904799-1-fre-FR/musicien.jpg"
+								class="card-img-top mx-auto" alt="profil">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="Profil.html">Astroboy</a>
+								</h5>
+								<p class="card-text">Lorem ipsum dolor sit amet consectetur
+									adipisicing elit. Animi soluta cum repellendus earum neque,
+									amet consectetur iure qui dicta sapiente quam ipsam
+									reprehenderit voluptatibus voluptas eligendi commodi obcaecati?
+									Cupiditate, odio.</p>
+							</div>
+						</div>
+					</div>
+					<div class="grid-item">
+						<div class="card h-100">
+							<img
+								src="https://img.freepik.com/photos-gratuite/jeune-musi…-jouant-du-saxophone-bleu_155003-32575.jpg?w=2000"
+								class="card-img-top mx-auto" alt="profil">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="Profil.html" >Martin Mystère</a>
+								</h5>
+								<p class="card-text">Lorem ipsum dolor sit amet consectetur
+									adipisicing elit. Culpa numquam voluptatum praesentium autem
+									accusamus aliquid omnis mollitia voluptas voluptate deleniti
+									aspernatur odio totam rerum necessitatibus, suscipit, nesciunt
+									expedita. Porro, ab.</p>
+							</div>
+						</div>
+					</div>
+					<div class="grid-item">
+						<div class="card h-100">
+							<img
+								src="https://cdn.pixabay.com/photo/2018/03/06/06/58/performance-3202707_960_720.jpg"
+								class="card-img-top mx-auto" alt="profil">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="Profil.html">Naruto Uzumaki</a>
+								</h5>
+								<p class="card-text">Lorem ipsum dolor sit, amet consectetur
+									adipisicing elit. Delectus cupiditate nobis impedit,
+									perferendis, incidunt, sint voluptatem ab nulla recusandae
+									adipisci.</p>
+							</div>
+						</div>
+
+					</div>
+					<div class="grid-item">
+						<div class="card h-100">
+							<img
+								src="https://www.talenteo.fr/app/uploads/2018/07/33-1600x692.jpg"
+								class="card-img-top mx-auto" alt="profil">
+							<div class=" card-body">
+								<h5 class="card-title">
+									<a href="Profil.html">Monkey D Luffy</a>
+								</h5>
+								<p class="card-text">Lorem ipsum, dolor sit amet consectetur
+									adipisicing elit. Aperiam, in.</p>
+							</div>
+						</div>
+					</div>
+					<input class="btn btn-outline-danger" type="button"
+						value="Tous mes amies" />
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<footer>
+		<p>Notre app est la meilleure</p>
+	</footer>
+</body>
+</html>

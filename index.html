@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>page html: thymeleaf</title>
+
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<h3 th:utext="${message}"></h3>
+	<a href="employees">List of employees</a>
+	<table th:if="${employees}">
+		<tr>
+			<th>EmpID</th>
+			<th>FirstName</th>
+			<th>LastName</th>
+			<th>StartDate</th>
+		</tr>
+		<tr th:each="emp:${employees}">
+			<td th:utext="${emp.empid}"></td>
+			<td th:utext="${emp.firstname}"></td>
+			<td th:utext="${emp.lastname}"></td>
+			<td th:utext="${emp.startdate}"></td>
+		</tr>
+	</table>
+	<br />
+	<a href="login"> login </a>
+	<br />
+	<a href="register"> register </a>
+
+
+
+
+</body>
+
+</html>
