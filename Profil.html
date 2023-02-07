@@ -52,7 +52,11 @@
 				</div>
 		</nav>
 
-		<div class="profile-picture"></div>
+	<div class="profile-picture">
+		 <div th:if="${user.photos} != null">  
+		<img th:src="@{${user.photosImagePath}}" alt=imgProfil/>
+		 </div> 
+		</div> 
 
 		<div class="titre">
 			<h1 th:utext="${user.usersFirstName} + ' ' + ${user.usersLastName}">Prénom
@@ -125,7 +129,7 @@
 								<td th:utext="${instru.key.instrName}+ ' ' + ' '"></td>
 								
 								<td th:if="${instru.value} == 1"> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></td>
-								<td th:if="${instru.value} == 2"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span>  </td>
+								<td th:if="${instru.value} == 2"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </td>
 								<td th:if="${instru.value} == 3"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  <span class="fa fa-star"></span><span class="fa fa-star"></span></td>
 								<td th:if="${instru.value} == 4"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span> <span class="fa fa-star"></span> </td>
 								<td th:if="${instru.value} == 5"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  </td>
@@ -270,7 +274,7 @@
 								class="card-img-top mx-auto" alt="profil">
 							<div class="card-body">
 								<h5 class="card-title">
-									<a href="Profil.html">Martin Mystère</a>
+									<a href="Profil.html" >Martin Mystère</a>
 								</h5>
 								<p class="card-text">Lorem ipsum dolor sit amet consectetur
 									adipisicing elit. Culpa numquam voluptatum praesentium autem
