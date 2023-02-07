@@ -42,6 +42,13 @@ public class Users implements java.io.Serializable {
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
 	private Set<Groupe> groupes = new HashSet<Groupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
+	private Set<Contact> contactsForUsersId = new HashSet<Contact>(0);
+	
+	
+
+	
+	
+	
 
 	public Users() {
 	}
@@ -251,7 +258,14 @@ public class Users implements java.io.Serializable {
 		return "/user-photos/" +  usersId + "/" + photos;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByUsersId")
+	public Set<Contact> getContactsForUsersId() {
+		return this.contactsForUsersId;
+	}
 
+	public void setContactsForUsersId(Set<Contact> contactsForUsersId) {
+		this.contactsForUsersId = contactsForUsersId;
+	}
 	
 	
 	

@@ -2,6 +2,7 @@ package fr.formation.inti.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,14 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.formation.inti.entity.Contact;
 import fr.formation.inti.entity.GenreMusic;
 import fr.formation.inti.entity.Musicinstruments;
 import fr.formation.inti.entity.Users;
 import fr.formation.inti.entity.UsersGenre;
 import fr.formation.inti.entity.UsersInstruments;
+import fr.formation.inti.repository.ContactRepository;
 import fr.formation.inti.repository.GenreMusicRepository;
 import fr.formation.inti.repository.MusicinstrumentsRepository;
 import fr.formation.inti.repository.UserRepository;
+import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
 
 @Controller
 public class ProfilController {
@@ -30,6 +34,8 @@ public class ProfilController {
 	private GenreMusicRepository gmr;
 	@Autowired
 	private MusicinstrumentsRepository mir;
+//	@Autowired
+//	private ContactRepository cr;
 	
 	
 	public ProfilController() {
@@ -66,25 +72,19 @@ public class ProfilController {
 		}
 		
 		
-		
-		
-//		List<Musicinstruments> list_instrument = new ArrayList<Musicinstruments>();
-//		List<Integer> list_niveau = new ArrayList<Integer>();
-//		for (UsersInstruments i : instrument) {
-//			Integer id2 = i.getId().getInstrId();
-//			Integer niveau=i.getNiveau();
-//			System.out.print("id instrument : " +id2);
-//			System.out.println(" niveau : " + niveau);
-//			list_niveau.add(niveau);
-//			Musicinstruments instru = mir.findById(id2).get();
-//			System.out.println("instrument : " + instru);
-//			list_instrument.add(instru);
-//		}
-	
+		//Récupérer la liste des amis
+	Set<Contact> contact=user1.getContactsForUsersId();
+	List<Users> list_amis = new ArrayList<Users>();
+		for (Contact c : contact) {
+		Integer id_contact = c.getId().getContactId();
+		System.out.print("id du contact : " +id_contact);
+			Users u = userRepository.findById(id_contact).get();
+			System.out.println(" | prénom ami " + u.getUsersFirstName());
+			list_amis.add(u);
+	}
+
+		model.addAttribute("mesamis", list_amis);
 		model.addAttribute("mesgenres", genre);
-//		model.addAttribute("instruments", list_instrument);
-		
-		
 		model.addAttribute("user", user1);
 		model.addAttribute("liste",list_instru);
 		

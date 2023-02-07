@@ -52,20 +52,20 @@
 				</div>
 		</nav>
 
-	<div class="profile-picture">
-		 <div th:if="${user.photos} != null">  
-		<img th:src="@{${user.photosImagePath}}" alt=imgProfil/>
-		 </div> 
-		</div> 
+		<div class="profile-picture">
+			
+				<img th:src="@{${user.photosImagePath}}" alt=imgProfil />
+		
+		</div>
 
 		<div class="titre">
 			<h1 th:utext="${user.usersFirstName} + ' ' + ${user.usersLastName}">Prénom
 				Nom</h1>
 		</div>
-	   <div class="btn-header">
-            <input class="btn btn-secondary" type="submit" value=" +Ajouter"  />
-            <input class="btn btn-secondary " type="submit" value="Chatter" />
-        </div> 
+		<div class="btn-header">
+			<input class="btn btn-secondary" type="submit" value=" +Ajouter" />
+			<input class="btn btn-secondary " type="submit" value="Chatter" />
+		</div>
 
 
 
@@ -79,26 +79,26 @@
 						<h3
 							class="d-flex align-items-center link-dark text-decoration-none border-bottom">
 							Mes réalisations</h3>
-                        
-                        <figure>
-								<figcaption class="songtittle">Chanson</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio></a>
-							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson bis</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio>
-								</a>
-							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson ter</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"><audio
-										class="audio" controls src="#">
-									</audio></a>
-							</figure>
+
+						<figure>
+							<figcaption class="songtittle">Chanson</figcaption>
+							<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
+									class="audio" controls src="#">
+								</audio></a>
+						</figure>
+						<figure>
+							<figcaption class="songtittle">Chanson bis</figcaption>
+							<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
+									class="audio" controls src="#">
+								</audio>
+							</a>
+						</figure>
+						<figure>
+							<figcaption class="songtittle">Chanson ter</figcaption>
+							<a href="/media/cc0-audio/t-rex-roar.mp3"><audio
+									class="audio" controls src="#">
+								</audio></a>
+						</figure>
 						<hr class="my-2">
 
 						<div class="col">
@@ -127,42 +127,46 @@
 
 
 								<td th:utext="${instru.key.instrName}+ ' ' + ' '"></td>
-								
-								<td th:if="${instru.value} == 1"> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></td>
-								<td th:if="${instru.value} == 2"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span> </td>
-								<td th:if="${instru.value} == 3"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  <span class="fa fa-star"></span><span class="fa fa-star"></span></td>
-								<td th:if="${instru.value} == 4"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span> <span class="fa fa-star"></span> </td>
-								<td th:if="${instru.value} == 5"> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span> <span class="fa fa-star checked"> </span><span class="fa fa-star checked"> </span>  </td>
-								
-								
-								<!-- <td th:utext="${instru.value}"> </td> -->
 
-								<!-- 							<tr th:each="instru: ${instruments}">
-
-
-								<td th:utext="${instru.instrName}"></td>
-
-								<td><span class="fa fa-star checked"></span> <span
-									class="fa fa-star checked"></span> <span
-									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
-									<span class="fa fa-star"></span></td>
-							</tr> -->
+								<td th:if="${instru.value} == 1"><span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span><span
+									class="fa fa-star"></span><span class="fa fa-star"></span><span
+									class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 2"><span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span><span
+									class="fa fa-star"></span><span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 3"><span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span><span
+									class="fa fa-star checked"> </span> <span class="fa fa-star"></span><span
+									class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 4"><span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span><span
+									class="fa fa-star checked"> </span> <span class="fa fa-star"></span>
+								</td>
+								<td th:if="${instru.value} == 5"><span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span> <span
+									class="fa fa-star checked"> </span><span
+									class="fa fa-star checked"> </span></td>
 						</table>
 
 					</div>
 				</div>
 				<div class="card description">
 					<h2>Me découvrir</h2>
-					<p th:utext="${user.usersBio}">
-						Grande amatrice de flute a bec, je pratique tous les jours. je
-						participe a de nombreux évènements afin de faire connaître cet
-						instrument qui pendant longtemps fut laissé dans l'oubli. Je joue
-						également du piano depuis mon enfance et je sui capable de jouer
-						la plupârt des grands morceaux classiques comme le requiem dert ou
-						la 4eme symphonie de Beethoven.
-
-
-						<!--           Modal -->
+					<p th:utext="${user.usersBio}">Grande amatrice de flute a bec,
+						je pratique tous les jours. je participe a de nombreux évènements
+						afin de faire connaître cet instrument qui pendant longtemps fut
+						laissé dans l'oubli. Je joue également du piano depuis mon enfance
+						et je sui capable de jouer la plupârt des grands morceaux
+						classiques comme le requiem dert ou la 4eme symphonie de
+						Beethoven.</p>
+					<!--           Modal -->
 					<div class="modal fade" id="modelId" tabindex="-1" role="dialog"
 						aria-labelledby="modelTitleId" aria-hidden="true">
 						<div class="modal-dialog modal-sm" role="document">
@@ -183,7 +187,7 @@
 							</div>
 						</div>
 					</div>
-					</p>
+
 				</div>
 
 				<h2 style="margin-bottom: 1rem;">Récemment</h2>
@@ -250,75 +254,31 @@
 					value="Voir plus" />
 				<h2 style="margin-bottom: 1rem;">Vos contacts</h2>
 				<div class=" grid-container2">
-					<div class="grid-item">
-						<div class="card h-100">
-							<img
+					<div th:each="a : ${mesamis}" class="grid-item">
+
+						<div class="card h-100" >
+							<img th:src="@{${user.photosImagePath}}" class="card-img-top mx-auto" alt=imgProfil />
+							<!-- <img
 								src="https://m.onisep.fr/var/onisep/storage/images/_aliases/vignette_search_mobile/media/images/metier_fiches-ideo/musicien/17904799-1-fre-FR/musicien.jpg"
-								class="card-img-top mx-auto" alt="profil">
+								class="card-img-top mx-auto" alt="profil"> -->
 							<div class="card-body">
 								<h5 class="card-title">
-									<a href="Profil.html">Astroboy</a>
+									<a th:href="@{/profil?id={id}(id=${a.usersId})}"
+										th:utext="${a.usersFirstName} + ' ' + ${a.usersLastName}">Astroboy</a>
 								</h5>
-								<p class="card-text">Lorem ipsum dolor sit amet consectetur
-									adipisicing elit. Animi soluta cum repellendus earum neque,
-									amet consectetur iure qui dicta sapiente quam ipsam
-									reprehenderit voluptatibus voluptas eligendi commodi obcaecati?
-									Cupiditate, odio.</p>
+								<p class="card-text" th:utext="${a.usersBio} ">Lorem ipsum
+									dolor sit amet consectetur adipisicing elit. Animi soluta cum
+									repellendus earum neque, amet consectetur iure qui dicta
+									sapiente quam ipsam reprehenderit voluptatibus voluptas
+									eligendi commodi obcaecati? Cupiditate, odio.</p>
 							</div>
 						</div>
 					</div>
-					<div class="grid-item">
-						<div class="card h-100">
-							<img
-								src="https://img.freepik.com/photos-gratuite/jeune-musi…-jouant-du-saxophone-bleu_155003-32575.jpg?w=2000"
-								class="card-img-top mx-auto" alt="profil">
-							<div class="card-body">
-								<h5 class="card-title">
-									<a href="Profil.html" >Martin Mystère</a>
-								</h5>
-								<p class="card-text">Lorem ipsum dolor sit amet consectetur
-									adipisicing elit. Culpa numquam voluptatum praesentium autem
-									accusamus aliquid omnis mollitia voluptas voluptate deleniti
-									aspernatur odio totam rerum necessitatibus, suscipit, nesciunt
-									expedita. Porro, ab.</p>
-							</div>
-						</div>
-					</div>
-					<div class="grid-item">
-						<div class="card h-100">
-							<img
-								src="https://cdn.pixabay.com/photo/2018/03/06/06/58/performance-3202707_960_720.jpg"
-								class="card-img-top mx-auto" alt="profil">
-							<div class="card-body">
-								<h5 class="card-title">
-									<a href="Profil.html">Naruto Uzumaki</a>
-								</h5>
-								<p class="card-text">Lorem ipsum dolor sit, amet consectetur
-									adipisicing elit. Delectus cupiditate nobis impedit,
-									perferendis, incidunt, sint voluptatem ab nulla recusandae
-									adipisci.</p>
-							</div>
-						</div>
 
-					</div>
-					<div class="grid-item">
-						<div class="card h-100">
-							<img
-								src="https://www.talenteo.fr/app/uploads/2018/07/33-1600x692.jpg"
-								class="card-img-top mx-auto" alt="profil">
-							<div class=" card-body">
-								<h5 class="card-title">
-									<a href="Profil.html">Monkey D Luffy</a>
-								</h5>
-								<p class="card-text">Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Aperiam, in.</p>
-							</div>
-						</div>
-					</div>
-					<input class="btn btn-outline-danger" type="button"
-						value="Tous mes amies" />
+
 				</div>
-
+				<!-- <input class="btn btn-outline-danger" type="button"
+					value="Tous mes amies" /> -->
 
 
 			</div>
