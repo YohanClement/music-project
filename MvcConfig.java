@@ -1,4 +1,5 @@
-package fr.formation.inti.configuration;
+
+package fr.formation.inti.config;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

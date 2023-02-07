@@ -1,3 +1,4 @@
+
 package fr.formation.inti.entity;
 // Generated 6 f�vr. 2023 � 12:03:42 by Hibernate Tools 5.1.12.Final
 
@@ -42,6 +43,7 @@ public class Users implements java.io.Serializable {
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
 	private Set<Groupe> groupes = new HashSet<Groupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
+	private Set<UserRoles> useroles = new HashSet<UserRoles>(0);
 
 	public Users() {
 	}
@@ -76,89 +78,83 @@ public class Users implements java.io.Serializable {
 		this.groupeMemberses = groupeMemberses;
 	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	public Users(Users user) {
+		this.usersFirstName = user.firstname;
+		this.lastname = user.lastname;
+		this.password = user.password;
+		this.zip = user.zip;
+		this.emailaddress = user.emailaddress;
+		this.city = user.city;
+		this.bio = user.bio;
+		this.address = user.address;
 
-	@Column(name = "Users_id", unique = true, nullable = false)
-	public Integer getUsersId() {
-		return this.usersId;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	public void setUsersId(Integer usersId) {
-		this.usersId = usersId;
-	}
-
-	@Column(name = "Password", nullable = false, length = 200)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
+	public Users(String usersFirstNamefirstname, String lastname, String password) {
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.password = password;
+		// DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	@Column(name = "Users_first_name", nullable = false, length = 500)
-	public String getUsersFirstName() {
-		return this.usersFirstName;
+	public Users(String firstname, String lastname, String password, String emailaddress) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.emailaddress = emailaddress;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	public void setUsersFirstName(String usersFirstName) {
-		this.usersFirstName = usersFirstName;
+	public Users(String firstname, String lastname, String password, String emailaddress, String city) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.emailaddress = emailaddress;
+		this.city = city;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	@Column(name = "Users_last_name", nullable = false, length = 500)
-	public String getUsersLastName() {
-		return this.usersLastName;
+	public Users(String firstname, String lastname, String password, String emailaddress, String city, String bio,
+			String zip) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.emailaddress = emailaddress;
+		this.zip = zip;
+		this.bio = bio;
+		this.city = city;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	public void setUsersLastName(String usersLastName) {
-		this.usersLastName = usersLastName;
+	public Users(String firstname, String lastname, String password, String emailaddress, String city, String zip) {
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.zip = zip;
+		this.emailaddress = emailaddress;
+		this.city = city;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(formatter.format(date));
+		this.datecrea = now;
 	}
 
-	@Column(name = "Users_Adress", length = 1000)
-	public String getUsersAdress() {
-		return this.usersAdress;
-	}
-
-	public void setUsersAdress(String usersAdress) {
-		this.usersAdress = usersAdress;
-	}
-
-	@Column(name = "Users_Email", unique = true, nullable = false, length = 500)
-	public String getUsersEmail() {
-		return this.usersEmail;
-	}
-
-	public void setUsersEmail(String usersEmail) {
-		this.usersEmail = usersEmail;
-	}
-
-	@Column(name = "Users_bio", length = 2000)
-	public String getUsersBio() {
-		return this.usersBio;
-	}
-
-	public void setUsersBio(String usersBio) {
-		this.usersBio = usersBio;
-	}
-
-	@Column(name = "Users_Zip", length = 50)
-	public String getUsersZip() {
-		return this.usersZip;
-	}
-
-	public void setUsersZip(String usersZip) {
-		this.usersZip = usersZip;
-	}
-
-	@Column(name = "Users_City", length = 200)
-	public String getUsersCity() {
-		return this.usersCity;
-	}
-
-	public void setUsersCity(String usersCity) {
-		this.usersCity = usersCity;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Users_date_crea", nullable = false, length = 19)
@@ -233,16 +229,6 @@ public class Users implements java.io.Serializable {
 		this.groupeMemberses = groupeMemberses;
 	}
 
-	
-	@Column(name = "photos", length = 45)
-	public String getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(String photos) {
-		this.photos = photos;
-	}
-
 	@Transient
 	public String getPhotosImagePath() {
 		if (photos == null ||  usersId == null)
@@ -251,9 +237,13 @@ public class Users implements java.io.Serializable {
 		return "/user-photos/" +  usersId + "/" + photos;
 	}
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+	public Set<UserRoles> getUseroles() {
+		return useroles;
+	}
 
-	
-	
-	
+	public void setUseroles(Set<UserRoles> useroles) {
+		this.useroles = useroles;
+	}
 	
 }
