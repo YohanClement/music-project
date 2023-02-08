@@ -135,44 +135,32 @@
 								<td th:utext="${instru.key.instrName}+ ' ' + ' '"></td>
 
 								<td th:if="${instru.value} == 1"><span
-									class="fa fa-star checked"></span> <span class="fa fa-star"></span><span
-									class="fa fa-star"></span><span class="fa fa-star"></span><span
-									class="fa fa-star"></span></td>
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span
+									class="fa fa-star"></span> <span class="fa fa-star"></span> <span
+									class="fa fa-star"></span> </td>
 								<td th:if="${instru.value} == 2"><span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"></span> <span class="fa fa-star"></span><span
-									class="fa fa-star"></span><span class="fa fa-star"></span></td>
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span
+									class="fa fa-star"></span> <span class="fa fa-star"></span></td>
 								<td th:if="${instru.value} == 3"><span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span><span
-									class="fa fa-star checked"> </span> <span class="fa fa-star"></span><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span
 									class="fa fa-star"></span></td>
 								<td th:if="${instru.value} == 4"><span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span><span
-									class="fa fa-star checked"> </span> <span class="fa fa-star"></span>
-								</td>
-								<td th:if="${instru.value} == 5"><span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span> <span
-									class="fa fa-star checked"> </span><span
-									class="fa fa-star checked"> </span></td>
-
-
-								<!-- <td th:utext="${instru.value}"> </td> -->
-
-								<!-- 							<tr th:each="instru: ${instruments}">
-
-
-								<td th:utext="${instru.instrName}"></td>
-
-								<td><span class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
 									class="fa fa-star checked"></span> <span
 									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
-									<span class="fa fa-star"></span></td>
-							</tr> -->
+								</td>
+								<td th:if="${instru.value} == 5"><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> </td>
+
+
 						</table>
 
 					</div>
@@ -227,16 +215,13 @@
 									</p>
 									<p class="card-text" th:utext="${e.evenementBio}"></p>
 							</div>
-							<!-- <div class="card-footer">
-								<small class="text-muted">Last updated 3 mins ago</small>
-							</div> -->
+
 						</div>
 					</div>
 					
 
 				</div>
-	<!-- 			<input class="btn btn-outline-danger" type="button"
-					value="Voir plus" /> -->
+
 				<h2 style="margin-bottom: 1rem;">Vos contacts</h2>
 				<div class=" grid-container2">
 					<div th:each="a : ${mesamis}" class="grid-item">
@@ -244,9 +229,7 @@
 						<div class="card h-100">
 							<img th:src="@{${user.photosImagePath}}"
 								class="card-img-top mx-auto" alt=imgProfil />
-							<!-- <img
-								src="https://m.onisep.fr/var/onisep/storage/images/_aliases/vignette_search_mobile/media/images/metier_fiches-ideo/musicien/17904799-1-fre-FR/musicien.jpg"
-								class="card-img-top mx-auto" alt="profil"> -->
+		
 							<div class="card-body">
 								<h5 class="card-title">
 									<a th:href="@{/profil?id={id}(id=${a.usersId})}"
@@ -263,8 +246,7 @@
 
 
 				</div>
-				<!-- 		<input class="btn btn-outline-danger" type="button"
-					value="Tous mes amies" /> -->
+
 
 
 			</div>
