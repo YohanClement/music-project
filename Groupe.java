@@ -1,5 +1,4 @@
 package fr.formation.inti.entity;
-// Generated 6 f�vr. 2023 � 12:03:42 by Hibernate Tools 5.1.12.Final
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,15 +22,19 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "groupe", catalog = "bd_music_project", uniqueConstraints = @UniqueConstraint(columnNames = "Groupe_Email"))
-public class Groupe implements java.io.Serializable {
+
+public class Groupe implements java.io.Serializable{
 
 	private Integer groupeId;
 	private Users users;
 	private String groupeName;
 	private String groupeEmail;
+	private String groupePassword;
+	private String groupeFrequence;
 	private Integer groupeMembersNmb;
+	private String groupeIsRecruting;
 	private String groupeDescription;
-	private Byte groupeIsRecruting;
+	private String audio; 
 	private String photos;
 	private Set<AudioGroupe> audioGroupes = new HashSet<AudioGroupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
@@ -47,14 +50,19 @@ public class Groupe implements java.io.Serializable {
 		this.groupeEmail = groupeEmail;
 	}
 
-	public Groupe(Users users, String groupeName, String groupeEmail, Integer groupeMembersNmb, Byte groupeIsRecruting,
+	public Groupe(Integer groupeId, Users users, String groupeName, String groupeEmail, String groupePassword,
+			Integer groupeMembersNmb, String groupeIsRecruting, String groupeDescription, String groupeFrequence,
 			Set<GroupeMembers> groupeMemberses, Set<GroupeEvenement> groupeEvenements, Set<Evenement> evenements,
 			Set<GenreGroupe> genreGroupes) {
+		super();
+		this.groupeId = groupeId;
 		this.users = users;
 		this.groupeName = groupeName;
 		this.groupeEmail = groupeEmail;
+		this.groupePassword = groupePassword;
 		this.groupeMembersNmb = groupeMembersNmb;
 		this.groupeIsRecruting = groupeIsRecruting;
+		this.groupeDescription = groupeDescription;
 		this.groupeMemberses = groupeMemberses;
 		this.groupeEvenements = groupeEvenements;
 		this.evenements = evenements;
@@ -74,7 +82,7 @@ public class Groupe implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Creator_id")
+	@JoinColumn(name = "Creator_id", updatable=false)
 	public Users getUsers() {
 		return this.users;
 	}
@@ -100,6 +108,67 @@ public class Groupe implements java.io.Serializable {
 	public void setGroupeEmail(String groupeEmail) {
 		this.groupeEmail = groupeEmail;
 	}
+	
+	@Column(name = "Groupe_password", nullable = false, length = 500)
+	public String getGroupePassword() {
+		return groupePassword;
+	}
+
+	public void setGroupePassword(String groupePassword) {
+		this.groupePassword = groupePassword;
+	}
+
+	@Column(name = "Groupe_description", length = 2000)
+	public String getGroupeDescription() {
+		return groupeDescription;
+	}
+
+	public void setGroupeDescription(String groupeDescription) {
+		this.groupeDescription = groupeDescription;
+	}
+
+	@Column(name = "Groupe_frequence", length = 100)
+	public String getGroupeFrequence() {
+		return groupeFrequence;
+	}
+
+	public void setGroupeFrequence(String groupeFrequence) {
+		this.groupeFrequence = groupeFrequence;
+	}
+
+	@Column(name = "photos")
+	public String getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(String photos) {
+		this.photos = photos;
+	}
+	
+	@Column(name = "audio")	
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+
+	@Transient
+	public String getPhotosImagePath() {
+		if (photos == null ||  groupeId == null)
+			return null;
+
+		return "/groupe-photos/" +  groupeId + "/" + photos;
+	}
+	
+	@Transient
+	public String getAudioPath() {
+		if (audio == null ||  groupeId == null)
+			return null;
+
+		return "/groupe-audio/" +  groupeId + "/" + audio;
+	}
 
 	@Column(name = "Groupe_members_nmb")
 	public Integer getGroupeMembersNmb() {
@@ -111,13 +180,22 @@ public class Groupe implements java.io.Serializable {
 	}
 
 	@Column(name = "Groupe_isrecruting")
-	public Byte getGroupeIsRecruting() {
+	public String getGroupeIsRecruting() {
 		return this.groupeIsRecruting;
 	}
 
-	public void setGroupeIsRecruting(Byte groupeIsRecruting) {
+	public void setGroupeIsRecruting(String groupeIsRecruting) {
 		this.groupeIsRecruting = groupeIsRecruting;
 	}
+
+//	@Column(name = "Groupe_typemusique")
+//	public String getGroupeTypeMusique() {
+//		return groupeTypeMusique;
+//	}
+//
+//	public void setGroupeTypeMusique(String groupeTypeMusique) {
+//		this.groupeTypeMusique = groupeTypeMusique;
+//	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
 	public Set<GroupeMembers> getGroupeMemberses() {
@@ -146,7 +224,7 @@ public class Groupe implements java.io.Serializable {
 		this.evenements = evenements;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "groupe")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
 	public Set<GenreGroupe> getGenreGroupes() {
 		return this.genreGroupes;
 	}
@@ -155,24 +233,6 @@ public class Groupe implements java.io.Serializable {
 		this.genreGroupes = genreGroupes;
 	}
 
-	@Column(name = "Groupe_description", length = 2000)
-	public String getGroupeDescription() {
-		return groupeDescription;
-	}
-
-	public void setGroupeDescription(String groupeDescription) {
-		this.groupeDescription = groupeDescription;
-	}
-
-	@Column(name = "photos", length = 45)
-	public String getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(String photos) {
-		this.photos = photos;
-	}
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupe")
 	public Set<AudioGroupe> getAudioGroupes() {
 		return audioGroupes;
@@ -181,21 +241,6 @@ public class Groupe implements java.io.Serializable {
 	public void setAudioGroupes(Set<AudioGroupe> audioGroupes) {
 		this.audioGroupes = audioGroupes;
 	}
-
-	@Transient
-	public String getPhotosImagePath() {
-		if (photos == null ||  groupeId == null)
-			return null;
-
-		return "/groupe-photos/" +  groupeId + "/" + photos;
-	}
 	
-//	@Transient
-//	public String getAudioPath() {
-//		if (audio == null ||  groupeId == null)
-//			return null;
-//
-//		return "/groupe-audio/" +  groupeId + "/" + photos;
-//	}
-
+	
 }
