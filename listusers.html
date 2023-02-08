@@ -35,10 +35,10 @@
 				</thead>
 				<tbody>
 					<tr th:each="users: ${listUsers}">
-						<td th:text="${users.usersid}">User ID</td>
-						<td th:text="${users.emailaddress}">E-mail</td>
-						<td th:text="${users.firstname}">First Name</td>
-						<td th:text="${users.lastname}">Last Name</td>
+						<td th:text="${users.usersId}">User ID</td>
+						<td th:text="${users.usersEmail}">E-mail</td>
+						<td th:text="${users.usersFirstName}">First Name</td>
+						<td th:text="${users.usersLastName}">Last Name</td>
 					</tr>
 
 
@@ -49,6 +49,11 @@
 	<br />
 	<div> El famoso foto de profil <img th:src="@{${user.photosImagePath}}" /></div>
 	
+	<a href="groupe">Afficher profil groupe</a>
+	
+	<a href="creaevent">Créer un évènement</a>
+	
+	<a href="listeevent">Consulter liste des évènements</a>
 	
 </body>
 </html>
