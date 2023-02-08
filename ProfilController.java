@@ -1,6 +1,10 @@
 package fr.formation.inti.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -142,4 +148,94 @@ public class ProfilController {
 		FileUploadUtil.saveFile(UploadAudio, NameFile, files);
 		return "login";
 	}
+	
+	@GetMapping("/update")
+	public String edit(Principal principal, Model model) {
+
+		String username = principal.getName();
+		System.out.println("case 1 : " + username);
+		Users u = userRepository.findByEmail(username);
+		Set<UsersInstruments> instrument = u.getUsersInstrumentses();
+//		Map<Musicinstruments, Integer> instru = new HashMap<Musicinstruments, Integer>();
+		List<Musicinstruments> list = new ArrayList<Musicinstruments>();
+		List<Integer> niv = new ArrayList<Integer>();
+		for (UsersInstruments i : instrument) {
+			Integer id2 = i.getMusicinstruments().getInstrId();
+			Integer niveau = i.getNiveau();
+			Musicinstruments musique = mir.findById(id2).get();
+			niv.add(niveau);
+			list.add(musique);
+		}
+
+		Map<String, Integer> list_instru = new HashMap<String, Integer>();
+		for (UsersInstruments i : instrument) {
+			Integer id2 = i.getMusicinstruments().getInstrId();
+			Integer niveau = i.getNiveau();
+			Musicinstruments instru = mir.findById(id2).get();
+			list_instru.put(instru.getInstrName(), niveau);
+		}
+
+		model.addAttribute("Myuser", u);
+		model.addAttribute("inst", list);
+		model.addAttribute("map", list_instru);
+
+		return "EditProfil";
+	}
+
+	@PostMapping("/update")
+	public String update(Users u, @RequestParam("instruments") String instrument,
+			@RequestParam("niveau") Integer niveau, @RequestParam("image") MultipartFile multipartFile,
+			@RequestParam("audios") MultipartFile files) throws IOException {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails) principal).getUsername();
+		Users user = userRepository.findByEmail(username);
+
+		user.setUsersBio(u.getUsersBio());
+		user.setUsersEmail(u.getUsersEmail());
+		user.setUsersFirstName(u.getUsersFirstName());
+		user.setUsersLastName(u.getUsersLastName());
+		user.setUsersCity(u.getUsersCity());
+		user.setUsersZip(u.getUsersZip());
+
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		System.out.println(user.getPhotos());
+		if (!multipartFile.isEmpty()) {
+			Path path = Paths.get(user.getPhotosImagePath());
+			Files.deleteIfExists(path);
+			user.setPhotos(fileName);
+			
+			String uploadDir = "user-photos/" + user.getUsersId();
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+		}
+		
+		String AudioName = StringUtils.cleanPath(files.getOriginalFilename());
+		if (!files.isEmpty()) {
+			String uploadAud = "user-audio/" + user.getUsersId();
+			Path path = Paths.get(user.getAudioPath());
+			Files.deleteIfExists(path);
+			user.setPhotos(AudioName);
+			
+			FileUploadUtil.saveFile(uploadAud, AudioName, multipartFile);
+		}
+
+		// Settings roles
+		Users savedUser = userRepository.save(user);
+
+		// Saving Instruments
+//		UsersInstruments uInst = new UsersInstruments(savedUser, mir.findByinstrName(instrument), niveau);
+		List<UsersInstruments> list = uInstrRepo.findByUsers(savedUser);
+		UsersInstruments ui = new UsersInstruments();
+		Musicinstruments m = mir.findByinstrName(instrument);
+		for (UsersInstruments a : list) {
+			if (a.getMusicinstruments() == m) {
+				ui = a;
+				ui.setNiveau(niveau);
+			}
+		}
+
+		uInstrRepo.save(ui);
+
+		return "redirect:/parametres";
+	}
+
 }

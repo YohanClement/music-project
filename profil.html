@@ -47,23 +47,8 @@
 								Mes réalisations</h3>
 
 							<figure>
-								<figcaption class="songtittle">Chanson</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio></a>
-							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson bis</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"> <audio
-										class="audio" controls src="#">
-									</audio>
-								</a>
-							</figure>
-							<figure>
-								<figcaption class="songtittle">Chanson ter</figcaption>
-								<a href="/media/cc0-audio/t-rex-roar.mp3"><audio
-										class="audio" controls src="#">
-									</audio></a>
+							
+								<audio controls> <source th:src="@{${user.AudioPath}}" /></audio>
 							</figure>
 							<hr class="my-2">
 
