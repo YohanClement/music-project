@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>List Users</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container text-center">
+		<div>
+			<form th:action="@{/logout}" method="GET">
+				<p>
+					Welcome <b>[[${#request.userPrincipal.principal.Username}]]</b>
+				</p>
+				<input type="submit" value="Sign Out" />
+			</form>
+		</div>
+		<div>
+			<h1>List of Users</h1>
+		</div>
+
+		<div>
+			<table class="table table-striped table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>User ID</th>
+						<th>E-mail</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="users: ${listUsers}">
+						<td th:text="${users.usersId}">User ID</td>
+						<td th:text="${users.usersEmail}">E-mail</td>
+						<td th:text="${users.usersFirstName}">First Name</td>
+						<td th:text="${users.usersLastName}">Last Name</td>
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br />
+	<div> El famoso foto de profil</div>
+	
+	<a href="groupe">Afficher profil groupe</a>
+		<a th:href="@{/profil?id={id}(id=${user.usersId})}">Afficher mon profil </a>
+</body>
+</html>

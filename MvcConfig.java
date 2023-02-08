@@ -8,10 +8,14 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {
+	public class MvcConfig implements WebMvcConfigurer {
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		exposeDirectory("groupe-photos", registry);
 		exposeDirectory("user-photos", registry);
+		exposeDirectory("user-audio", registry);
+		exposeDirectory("groupe-audio", registry);
 	}
 
 	private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
@@ -24,4 +28,5 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/" + uploadPath + "/");
 	}
 
-}
+	}
+
