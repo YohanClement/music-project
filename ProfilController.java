@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.formation.inti.entity.Contact;
+import fr.formation.inti.entity.Evenement;
 import fr.formation.inti.entity.GenreMusic;
 import fr.formation.inti.entity.Musicinstruments;
 import fr.formation.inti.entity.Users;
+import fr.formation.inti.entity.UsersEvenement;
 import fr.formation.inti.entity.UsersGenre;
 import fr.formation.inti.entity.UsersInstruments;
 import fr.formation.inti.repository.ContactRepository;
+import fr.formation.inti.repository.EvenementRepository;
 import fr.formation.inti.repository.GenreMusicRepository;
 import fr.formation.inti.repository.MusicInstrumentRepository;
 import fr.formation.inti.repository.UserRepository;
@@ -35,6 +38,8 @@ public class ProfilController {
 	private MusicInstrumentRepository mir;
 	@Autowired
 	private ContactRepository cr;
+	@Autowired
+	private EvenementRepository er;
 	
 
 	public ProfilController() {
@@ -85,9 +90,25 @@ public class ProfilController {
 			System.out.println(" | prénom ami " + u.getUsersFirstName());
 			list_amis.add(u);
 		}
+		
+		// Récupérer la liste des évènements
+				Set<UsersEvenement> userEvenement = user1.getUsersEvenements();;
+				List<Evenement> list_evenements = new ArrayList<Evenement>();
+				for (UsersEvenement e : userEvenement) {
+					Integer id_event = e.getEvenement().getEvenementId();
+					System.out.print("id evenement : " + id_event);
+					Evenement event = er.findById(id_event).get();
+			System.out.println("nom evenement " + event.getEvenementName() + " id : " + event.getEvenementId());
+				list_evenements.add(event);
+				}
+				
+				
+
+				
+				
 
 		model.addAttribute("mesamis", list_amis);
-
+		model.addAttribute("evenements", list_evenements);
 		model.addAttribute("mesgenres", genre);
 
 		model.addAttribute("user", user1);

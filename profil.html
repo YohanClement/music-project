@@ -213,65 +213,30 @@
 				<h2 style="margin-bottom: 1rem;">Récemment</h2>
 
 				<div class="grid-container">
-					<div class="grid-item">
+					<div  th:each="e : ${evenements}"  class="grid-item">
 						<div class="card h-100">
-							<h5 class="card-header">
-								<a href="Event.html">Concert lyrique à l'opéra de Blois</a>
+							<h5  class="card-header">
+								<a href="Event.html" th:href="@{/pageEvent?id={id}(id=${e.evenementId})}"
+										th:utext="${e.evenementName}">Concert lyrique à l'opéra de Blois</a>
 							</h5>
-							<img class="card-img-top rounded mx-auto"
-								src="https://france3-regions.francetvinfo.fr/image/wu4r-OS14-4n6u19v-Qwg9dvLW8/600x400/regions/2022/11/08/636a75537c518_opera-loges-lumiere.jpg"
-								alt="Event image">
+
 							<div class="card-body">
-								<p class="card-text">Concert de l'orchestre symphopnique de
-									la ville de Nantes dans le cadre magnifique de l'opéa royale de
-									Blois</p>
+								<p class="card-text" th:utext="${e.evenementDatedebut} + ' - ' + ${e.evenementDatefin}">
+									</p>
+									<p class="card-text" th:utext="${e.evenementLieu} + ' - ' + ${e.evenementCity}">
+									</p>
+									<p class="card-text" th:utext="${e.evenementBio}"></p>
 							</div>
-							<div class="card-footer">
+							<!-- <div class="card-footer">
 								<small class="text-muted">Last updated 3 mins ago</small>
-							</div>
+							</div> -->
 						</div>
 					</div>
-					<div class="grid-item">
-						<div class="card h-100">
-							<h5 class="card-header">
-								<a href="Event.html">Concert Jazz, Lamotte-Beuvrons</a>
-							</h5>
-							<img class="card-img-top rounded mx-auto"
-								src="https://www.reserverunbar.fr/images/etab/1671795471_63a5930f49511_m.jpg"
-								alt="Event image">
-							<div class="card-body">
-								<p class="card-text">Concert incroyable organisé pour
-									célébré la nouvelle année. On a fait dansé le bar du village
-									jusqu'à l'aurore sur des airs endiablés</p>
-							</div>
-							<div class="card-footer">
-								<small class="text-muted">Last updated 8 hours ago</small>
-							</div>
-						</div>
-					</div>
-					<div class="grid-item">
-						<div class="card h-100">
-							<h5 class="card-header">
-								<a href="Event.html">Foire aux Jambons de Quimper</a>
-							</h5>
-							<img class="card-img-top rounded mx-auto"
-								src="https://www.vallet.fr/wp-content/uploads/tribe_events/bonnefontaine.jpg"
-								alt="Event image">
-							<div class="card-body">
-								<p class="card-text">This is a wider card with supporting
-									text below as a natural lead-in to additional content. This
-									card has even longer content than the first to show that equal
-									height action.</p>
-							</div>
-							<div class="card-footer">
-								<small class="text-muted">Last updated 2 months ago</small>
-							</div>
-						</div>
-					</div>
+					
 
 				</div>
-				<input class="btn btn-outline-danger" type="button"
-					value="Voir plus" />
+	<!-- 			<input class="btn btn-outline-danger" type="button"
+					value="Voir plus" /> -->
 				<h2 style="margin-bottom: 1rem;">Vos contacts</h2>
 				<div class=" grid-container2">
 					<div th:each="a : ${mesamis}" class="grid-item">
