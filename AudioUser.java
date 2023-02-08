@@ -1,5 +1,4 @@
 package fr.formation.inti.entity;
-// Generated 7 f�vr. 2023 � 10:11:11 by Hibernate Tools 5.1.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +14,14 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "audio_user", catalog = "bd_music_project")
-public class AudioUser implements java.io.Serializable {
+public class AudioUser {
 
 	private int audioId;
 	private Users users;
 	private String audioName;
+	private String audioType;
+	private String audioFormat;
+	private String audioPath;
 
 	public AudioUser() {
 	}
@@ -33,6 +35,12 @@ public class AudioUser implements java.io.Serializable {
 		this.audioId = audioId;
 		this.users = users;
 		this.audioName = audioName;
+	}
+
+	public AudioUser(String audioName, String fileFormat, String fileType) {
+		this.audioName = audioName;
+		this.audioType = fileType;
+		this.audioFormat = fileFormat;
 	}
 
 	@Id
@@ -64,13 +72,36 @@ public class AudioUser implements java.io.Serializable {
 	public void setAudioName(String audioName) {
 		this.audioName = audioName;
 	}
-	
+
+	@Column(name = "Audio_type", length = 45)
+	public String getAudioType() {
+		return audioType;
+	}
+
+	public void setAudioType(String audioType) {
+		this.audioType = audioType;
+	}
+
+	@Column(name = "audio_format", length = 45)
+	public String getAudioFormat() {
+		return audioFormat;
+	}
+
+	@Column(name = "audio_path", length = 45)
+	public void setAudioFormat(String audioFormat) {
+		this.audioFormat = audioFormat;
+	}
+
+	public void setAudioPath(String audioPath) {
+		this.audioPath = audioPath;
+	}
+
 	@Transient
 	public String getAudioPath() {
-		if (audioName == null ||  users == null)
+		if (audioName == null || users == null)
 			return null;
 
-		return "/users-audio/" +  users + "/" + audioName;
+		return "/users-audio/" + users + "/" + audioName;
 	}
 
 }

@@ -1,5 +1,4 @@
 package fr.formation.inti.entity;
-// Generated 7 f�vr. 2023 � 10:11:11 by Hibernate Tools 5.1.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "audio_groupe", catalog = "bd_music_project")
 public class AudioGroupe implements java.io.Serializable {
-
+	
 	private int audioId;
 	private Groupe groupe;
 	private String audioName;
@@ -72,5 +71,6 @@ public class AudioGroupe implements java.io.Serializable {
 
 		return "/groupe-audio/" +  groupe + "/" + audioName;
 	}
+
 
 }
