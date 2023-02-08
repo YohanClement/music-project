@@ -1,14 +1,16 @@
 package fr.formation.inti.entity;
-// Generated 6 f�vr. 2023 � 12:03:42 by Hibernate Tools 5.1.12.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,27 +35,23 @@ public class Users implements java.io.Serializable {
 	private String usersBio;
 	private String usersZip;
 	private String usersCity;
-	private Date usersDateCrea;
-	private Integer usersLinkedAccountsNmbr;
+	private LocalDateTime usersDateCrea;
 	private String photos;
+	private Integer usersLinkedAccountsNmbr;
+	private Set<Contact> contactsForUsersId = new HashSet<Contact>(0);
+	
+	private Set<UserRoles> useroles = new HashSet<UserRoles>(0);
 	private Set<UsersGenre> usersGenres = new HashSet<UsersGenre>(0);
 	private Set<UsersEvenement> usersEvenements = new HashSet<UsersEvenement>(0);
 	private Set<UsersInstruments> usersInstrumentses = new HashSet<UsersInstruments>(0);
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
 	private Set<Groupe> groupes = new HashSet<Groupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
-	private Set<Contact> contactsForUsersId = new HashSet<Contact>(0);
-	
-	
-
-	
-	
-	
 
 	public Users() {
 	}
 
-	public Users(String password, String usersFirstName, String usersLastName, String usersEmail, Date usersDateCrea) {
+	public Users(String password, String usersFirstName, String usersLastName, String usersEmail, LocalDateTime usersDateCrea) {
 		this.password = password;
 		this.usersFirstName = usersFirstName;
 		this.usersLastName = usersLastName;
@@ -62,7 +60,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	public Users(String password, String usersFirstName, String usersLastName, String usersAdress, String usersEmail,
-			String usersBio, String usersZip, String usersCity, Date usersDateCrea, Integer usersLinkedAccountsNmbr,
+			String usersBio, String usersZip, String usersCity, LocalDateTime usersDateCrea, Integer usersLinkedAccountsNmbr,
 			Set<UsersGenre> usersGenres, Set<UsersEvenement> usersEvenements, Set<UsersInstruments> usersInstrumentses,
 			Set<Evenement> evenements, Set<Groupe> groupes, Set<GroupeMembers> groupeMemberses) {
 		this.password = password;
@@ -167,14 +165,14 @@ public class Users implements java.io.Serializable {
 		this.usersCity = usersCity;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Users_date_crea", nullable = false, length = 19)
-	public Date getUsersDateCrea() {
+	public LocalDateTime getUsersDateCrea() {
 		return this.usersDateCrea;
 	}
 
-	public void setUsersDateCrea(Date usersDateCrea) {
-		this.usersDateCrea = usersDateCrea;
+	public void setUsersDateCrea(LocalDateTime now) {
+		this.usersDateCrea = now;
 	}
 
 	@Column(name = "Users_Linked_Accounts_Nmbr")
@@ -236,12 +234,21 @@ public class Users implements java.io.Serializable {
 		return this.groupeMemberses;
 	}
 
+	
 	public void setGroupeMemberses(Set<GroupeMembers> groupeMemberses) {
 		this.groupeMemberses = groupeMemberses;
 	}
 
-	
-	@Column(name = "photos", length = 45)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+	public Set<UserRoles> getUseroles() {
+		return useroles;
+	}
+
+	public void setUseroles(Set<UserRoles> useroles) {
+		this.useroles = useroles;
+	}
+
+	@Column(name = "photos")
 	public String getPhotos() {
 		return photos;
 	}
@@ -249,7 +256,7 @@ public class Users implements java.io.Serializable {
 	public void setPhotos(String photos) {
 		this.photos = photos;
 	}
-
+	
 	@Transient
 	public String getPhotosImagePath() {
 		if (photos == null ||  usersId == null)
@@ -257,7 +264,6 @@ public class Users implements java.io.Serializable {
 
 		return "/user-photos/" +  usersId + "/" + photos;
 	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByUsersId")
 	public Set<Contact> getContactsForUsersId() {
 		return this.contactsForUsersId;
@@ -266,8 +272,4 @@ public class Users implements java.io.Serializable {
 	public void setContactsForUsersId(Set<Contact> contactsForUsersId) {
 		this.contactsForUsersId = contactsForUsersId;
 	}
-	
-	
-	
-	
 }
