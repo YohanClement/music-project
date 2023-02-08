@@ -24,48 +24,19 @@
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
 	crossorigin="anonymous"></script>
 
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+
 <link rel="stylesheet" th:href="@{/css/stylessuzanne.css}">
 </head>
 
 <body>
 	<header class="bandeau">
-		<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-			<div class="container px-4 px-lg-5">
-				<!-- <a class="navbar-brand" href="#">Précédent</a> -->
-				<button class="navbar-toggler topright" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-					aria-controls="navbarResponsive" aria-expanded="false"
-					aria-label="Toggle navigation">
-					Menu <i class="fas fa-bars"></i>
-				</button>
-				<div class="collapse navbar-collapse topright" id="navbarResponsive">
-					<ul class="navbar-nav ms-auto py-4 py-lg-0">
-						<!-- Profil  -->
-						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="profil.html"><i class="fas fa-user fa-2x"></i></a></li>
-						<!-- Messagerie -->
-						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="chat.html"><i class="far fa-comments fa-2x"></i></a></li>
-						<!-- ajouter un événement   -->
-						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="CreaEvent.html"><i class="far fa-calendar-plus fa-2x"></i></a>
-						</li>
+		<nav th:replace="header :: nav"></nav>
 
-						<!-- Paramètres -->
-						<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-							href="parametres"><i class="fas fa-sliders-h fa-2x"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<br />
-		<br />
-		<br>
-		<div class="titre" style="text-align: center;">
-
+		<div class="titre">
 			<h1>Accueil</h1>
-
 		</div>
+
 	</header>
 	<div class="body">
 		<!-- Barre de recherche -->
@@ -835,12 +806,6 @@
 					</button>
 				</div>
 
-
-
-
-
-
-
 			</div>
 
 			<div class="sidehome">
@@ -869,10 +834,6 @@
 
 				</div>
 
-				<a href="groupe">Afficher profil groupe</a> <a href="parametres">Paramètres</a>
-
-				<a href="pagegroupe">Creer un groupe</a>
-
 
 
 			</div>
@@ -890,8 +851,8 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 		crossorigin="anonymous"></script>
+
+	<footer th:include="footer :: footer"></footer>
 </body>
 
 </html>
-
-

@@ -38,8 +38,9 @@ public class Users implements java.io.Serializable {
 	private LocalDateTime usersDateCrea;
 	private String photos;
 	private Integer usersLinkedAccountsNmbr;
+	private String audio;
 	
-	
+	private Set<Contact> contactsForUsersId = new HashSet<Contact>(0);
 	private Set<UserRoles> useroles = new HashSet<UserRoles>(0);
 	private Set<UsersGenre> usersGenres = new HashSet<UsersGenre>(0);
 	private Set<UsersEvenement> usersEvenements = new HashSet<UsersEvenement>(0);
@@ -80,10 +81,11 @@ public class Users implements java.io.Serializable {
 		this.groupes = groupes;
 		this.groupeMemberses = groupeMemberses;
 	}
+	
+	
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "Users_id", unique = true, nullable = false)
 	public Integer getUsersId() {
 		return this.usersId;
@@ -264,5 +266,44 @@ public class Users implements java.io.Serializable {
 
 		return "/user-photos/" +  usersId + "/" + photos;
 	}
+
+	@Override
+	public String toString() {
+		return "Users [usersId=" + usersId + ", password=" + password + ", usersFirstName=" + usersFirstName
+				+ ", usersLastName=" + usersLastName + ", usersAdress=" + usersAdress + ", usersEmail=" + usersEmail
+				+ ", usersBio=" + usersBio + ", usersZip=" + usersZip + ", usersCity=" + usersCity + ", usersDateCrea="
+				+ usersDateCrea + ", photos=" + photos + ", useroles=" + useroles + "]";
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByUsersId")
+	public Set<Contact> getContactsForUsersId() {
+		return contactsForUsersId;
+	}
+
+	public void setContactsForUsersId(Set<Contact> contactsForUsersId) {
+		this.contactsForUsersId = contactsForUsersId;
+	}
+	
+	@Column(name = "audio")
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+	
+	@Transient
+	public String getAudioPath() {
+		if (audio == null ||  usersId == null)
+			return null;
+
+		return "/user-audio/" +  usersId + "/" + audio;
+	}
+	
+	
+
+	
+	
 
 }

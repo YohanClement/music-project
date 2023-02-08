@@ -1,11 +1,15 @@
 package fr.formation.inti.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,28 +22,34 @@ import javax.persistence.Table;
 
 public class UsersEvenement implements java.io.Serializable{
 	
-	private UsersEvenementId id;
+	private Integer id;
 	private Evenement evenement;
 	private Users users;
 
 	public UsersEvenement() {
 	}
 
-	public UsersEvenement(UsersEvenementId id, Evenement evenement, Users users) {
+	public UsersEvenement(Evenement evenement, Users users) {
+		super();
+		this.evenement = evenement;
+		this.users = users;
+	}
+
+
+	public UsersEvenement(Integer id, Evenement evenement, Users users) {
 		this.id = id;
 		this.evenement = evenement;
 		this.users = users;
 	}
 
-	@EmbeddedId
-
-	@AttributeOverrides({ @AttributeOverride(name = "usersId", column = @Column(name = "Users_id", nullable = false)),
-			@AttributeOverride(name = "evenementId", column = @Column(name = "Evenement_id", nullable = false)) })
-	public UsersEvenementId getId() {
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "Evenement_id", unique = true, nullable = false)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(UsersEvenementId id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -18,8 +18,7 @@
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
 	crossorigin="anonymous"></script>
 
-<link th:href="@{/css/stylesflorian.css}" rel="stylesheet" />
-
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -28,99 +27,65 @@
 </head>
 
 <body>
-	<header class="bandeau">
-		<nav th:fragment="header"
-			class="navbar navbar-expand-lg navbar-light topright">
-			<div class="container-fluid">
-
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav">
-						<!-- home -->
-						<li class="nav-item"><a class="nav-link" href="index"><i
-								class="fas fa-home fa-2x"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-		
-		<div class="titre">
-			<h1> Creation groupe</h1>
-		</div>
-	</header>
-
+	<div th:replace="/fragments/navbar :: navbar"></div>
+	
+	<!--  <h1 th:href="@{/update?id={id}(id=${user.usersId})}"></h1>
+-->
 	<div class="body">
 		<div class="card">
-			<form th:action="@{/process_register}" th:object="${user}"
+			<form th:action="@{/update}" th:object="${user}"
 				method="post" enctype="multipart/form-data">
 				<!-- enctype =lé moultimédia -->
 				<div class="container">
 					<div class="row gx-5 gx-lg-8 justify-content-center">
 						<div class="col-lg-9">
 							<div class="post-preview">
-							<br>
 								<h2>Qui êtes vous ?</h2>
 								<!--Adds a heading to the form-->
 								<div>
 									<label class="form-label" for="">FirstName :</label> <input
 										class="form-control" type="text" name="usersFirstName"
-										size="35" maxlength="35" value="" required />
+										size="35" maxlength="35" value="${user.usersFirstName}" required />
 									<!-- Input type text for small texts, specify size -->
 								</div>
 
 								<div>
 									<label class="form-label" for="">LastName :</label> <input
 										class="form-control" type="text" name="usersLastName"
-										size="35" maxlength="35" value="" required />
+										size="35" maxlength="35" value="${user.usersLastName}" required />
 									<!-- Input type text for small texts, specify size -->
 								</div>
 
 								<div class="mb-3">
 									<label for="" class="form-label">Adresse Mail</label> <input
 										type="email" class="form-control" name="usersEmail"
-										aria-describedby="emailHelp" required />
+										aria-describedby="emailHelp" value="${user.usersEmail}"required />
 									<div id="emailHelp" class="form-text">Votre adresse est
 										confidentielle, nous ne la partageons pas</div>
 								</div>
-								<div class="mb-3">
-									<label class="form-label">Mot de passe</label> <input
-										type="password" name="password" class="form-control"
-										aria-describedby="passwordHelpBlock" required />
-									<div id="passwordHelpBlock" class="form-text">Your
-										password must be 8-20 characters long, contain letters and
-										numbers, and must not contain spaces, special characters, or
-										emoji.</div>
-								</div>
-								<label for="password" class="form-label">Confirmation du
-									mot de passe</label> <input class="form-control" type="password"
-									name="password2" aria-describedby="passwordHelpBlock" />
-
+							
 								<div>
 									<label class="form-label" for="zip">Code Postal</label> <input
 										class="postal-code form-control" id="zip" name="usersZip"
-										autocomplete="zip" enterkeyhint="next" />
+										autocomplete="zip" enterkeyhint="next" value="${user.usersZip}"/>
 								</div>
 								<div>
 									<label class="form-label" for="city">City</label> <input
 										class="form-control" required type="text" id="city"
-										name="usersCity" /> <label class="form-label" for="file">Parlez
+										name="usersCity" value="${user.usersFirstName}"/> 
+										
+										<label class="form-label" for="file">Parlez
 										nous de vous</label>
 
-									<textarea class="form-control" name="usersBio" cols="30"
-										rows="4"></textarea>
+									<textarea class="form-control" name="usersBio" cols="30" rows="4" >{${user.usersBio}}</textarea>
 									<hr />
 								</div>
 							</div>
 							<div class="post-preview">
-								<label>Photos: </label> <label>Photos: </label> <input
+								<label>Photos: </label>  <input
 									type="file" name="image" accept="image/png, image/jpeg" /> <br />
 								<br />
 							</div>
-							
-							<div class="post-preview">
-							<label>Audio: </label><input
-								type="file" name="audios" accept="audio/*" /> <br />
-							<br />
-						</div>
 
 						</div>
 						<hr />
@@ -134,12 +99,13 @@
 								<option value="MAO">MAO</option>
 								<option value="violon">Violon</option>
 								<option value="autre">Autre: préciser</option>
-							</select> <label class="form-label" for="file"> Quel est votre
-								niveau ?</label> <input type="radio" name="niveau" value="1" />Débutant
-							<input type="radio" name="niveau" value="2" />Initié <input
-								type="radio" name="niveau" value="3" />Intermédiaire <input
-								type="radio" name="niveau" value="4" />Bon <input type="radio"
-								name="niveau" value="5" />Avancé
+							</select> <label class="form-label" for="file">Quel est votre
+								niveau ?</label> <input class="form-check-input" type="radio"
+								name="niveau" value="1" />Débutant <input type="radio"
+								name="niveau" value="2" />Initié <input type="radio"
+								name="niveau" value="3" />Intermédiaire <input type="radio"
+								name="niveau" value="4" />Bon <input type="radio" name="niveau"
+								value="5" />Avancé
 						</div>
 
 						<!--  <div class="post-preview">
@@ -159,18 +125,35 @@
 							type="radio" name="niveau" value="3" />Intermédiaire <input
 							type="radio" name="niveau" value="4" />Bon <input type="radio"
 							name="niveau" value="5" />Avancé
-					</div> -->
-            
-            
-						<button class="btn btn-primary" type="submit">Créer le
+					</div>
+
+					<h2>Votre playlist</h2>
+
+
+					<!--       <form method="post" enctype="multipart/form-data">
+              <div>
+                <label class="form-label" for="file"
+                  >Sélectionner un fichier</label
+                >
+                <input
+                  class="form-control"
+                  type="file"
+                  id="filesupp"
+                  name="file"
+                  multiple
+                />
+                <button class="btn btn-outline-secondary" type="button">
+                  Envoyer</button
+                ><br /><br />
+              </div>
+            </form> -->
+						<button class="btn btn-primary" type="submit">Modifier le
 							profil</button>
 					</div>
 				</div>
-
 			</form>
 		</div>
 	</div>
-
 	<footer th:include="footer :: footer"></footer>
 </body>
 </html>

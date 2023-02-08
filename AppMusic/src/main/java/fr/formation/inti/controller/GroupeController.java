@@ -37,7 +37,7 @@ public class GroupeController {
 	private GenreMusicRepository gmr;
 
 	@GetMapping("/pagegroupe")
-	public String viewgroupepage(Model model) {
+	public String viewgroupepage() {
 		return "creationgroupe";
 	}
 
@@ -82,7 +82,7 @@ public class GroupeController {
 	
 	@GetMapping("/groupe")
 	public String viewgrouppage(Model model) {
-		Groupe gr = grouperep.findById(37).get();
+		Groupe gr = grouperep.findById(63).get();
 		Set<GenreGroupe> style = gr.getGenreGroupes();
 		List<GenreMusic> genre = new ArrayList<GenreMusic>();
 		for (GenreGroupe g : style) {

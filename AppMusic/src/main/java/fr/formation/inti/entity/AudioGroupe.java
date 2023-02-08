@@ -46,7 +46,7 @@ public class AudioGroupe implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Groupe_id", nullable = false)
+	@JoinColumn(name = "Groupe_id", updatable = false, nullable = false)
 	public Groupe getGroupe() {
 		return this.groupe;
 	}

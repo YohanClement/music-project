@@ -43,7 +43,7 @@ public class UsersGenre implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Genre_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Genre_id", updatable = false,nullable = false, insertable = false )
 	public GenreMusic getGenreMusic() {
 		return this.genreMusic;
 	}
@@ -53,7 +53,7 @@ public class UsersGenre implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Users_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Users_id", updatable = false,nullable = false, insertable = false )
 	public Users getUsers() {
 		return this.users;
 	}

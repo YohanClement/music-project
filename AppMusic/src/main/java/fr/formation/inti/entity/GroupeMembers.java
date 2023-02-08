@@ -43,7 +43,7 @@ public class GroupeMembers implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Groupe_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Groupe_id", updatable=false, nullable = false, insertable = false )
 	public Groupe getGroupe() {
 		return this.groupe;
 	}
@@ -53,7 +53,7 @@ public class GroupeMembers implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Users_members", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "Users_members", updatable=false, nullable = false, insertable = false )
 	public Users getUsers() {
 		return this.users;
 	}

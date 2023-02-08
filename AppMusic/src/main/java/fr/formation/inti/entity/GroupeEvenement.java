@@ -44,7 +44,7 @@ public class GroupeEvenement implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Evenement_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(nullable = false, insertable = false, updatable = false)
 	public Evenement getEvenement() {
 		return this.evenement;
 	}
@@ -54,7 +54,7 @@ public class GroupeEvenement implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Groupe_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(nullable = false, insertable = false,updatable = false)
 	public Groupe getGroupe() {
 		return this.groupe;
 	}

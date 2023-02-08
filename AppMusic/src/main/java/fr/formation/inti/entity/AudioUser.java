@@ -14,7 +14,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "audio_user", catalog = "bd_music_project")
-public class AudioUser {
+public class AudioUser implements java.io.Serializable{
 	
 	private int audioId;
 	private Users users;
@@ -46,7 +46,7 @@ public class AudioUser {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Users_id", nullable = false)
+	@JoinColumn(name = "Users_id", updatable = false,nullable = false)
 	public Users getUsers() {
 		return this.users;
 	}
