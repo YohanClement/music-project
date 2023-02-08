@@ -25,6 +25,7 @@
 <body>
 	<header class="bandeau">
 		<nav th:replace="header :: nav"></nav>
+		
 		<div class="profile-picture">
 			<img th:src="@{${groupe.photosImagePath}}" alt=imgProfil />
 		</div>
@@ -32,25 +33,6 @@
 			<h1 th:utext="${groupe.groupeName}">Prénom
 				Nom</h1>
 		</div>
-		<div class="btn-header">
-			<input class="btn btn-secondary" type="submit" value=" +Ajouter" />
-			<input class="btn btn-secondary " type="submit" value="Chatter" />
-		</div>
-	</header>
-
-	<div class="profile-picture">
-
-		<img th:src="@{${groupe.photosImagePath}}" />
-	</div>
-
-	<div class="titre">
-		<h1 th:utext="${groupe.groupeName}"></h1>
-	</div>
-	<div class="btn-header">
-		<a href="#"> <input class="btn btn-secondary" type="submit"
-			value=" +Ajouter" /></a> <a href="#"><input
-			class="btn btn-secondary " type="submit" value="Chatter" /></a>
-	</div>
 	</header>
 
 	<div class="body">
