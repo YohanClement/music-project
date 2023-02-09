@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title
+	th:utext="'Profil ' + ${user.usersFirstName} + ' ' + ${user.usersLastName}">Profil</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+	crossorigin="anonymous"></script>
+<link th:href="@{/css/stylesyohan.css}" rel="stylesheet" />
+<!--     <link href="/styles.css" rel="stylesheet" /> -->
+</head>
+
+<body>
+	<header class="bandeau">
+		<nav th:replace="header :: nav"></nav>
+
+		<div class="titre">
+			<h1>Accueil</h1>
+		</div>
+		<div class="profile-picture">
+			<div th:if="${user.photos} != null">
+				<img th:src="@{${user.photosImagePath}}" alt=imgProfil />
+			</div>
+		</div>
+
+		<div class="titre">
+			<h1 th:utext="${user.usersFirstName} + ' ' + ${user.usersLastName}">Prénom
+				Nom</h1>
+			<h2 th:utext="${message}"></h2>
+		</div>
+		<div class="btn-header">
+			<a th:href="@{/ajouter?id={id}(id=${user.usersId})}"
+				onclick="return confirm('Voulez vous ajouter cette personne dans vos contact?');">
+				<button class="btn btn-secondary" data-toggle="modal" type="submit">
+					+ Ajouter</button>
+			</a> <input class="btn btn-secondary " type="submit" value="Chatter" />
+
+
+		</div>
+
+	</header>
+
+
+	<div class="body">
+		<div class="row justify-content-center">
+			<div class="col-md-12 col-lg-11">
+				<div class="sidenav">
+					<div class="contenue">
+						<h3
+							class="d-flex align-items-center link-dark text-decoration-none border-bottom">
+							Mes réalisations</h3>
+
+						<figure>
+
+							<audio controls>
+								<source th:src="@{${user.AudioPath}}" />
+							</audio>
+						</figure>
+
+						<hr class="my-2">
+
+						<div class="col">
+							<h3 class="post-title">Gouts musicaux</h3>
+							<ul th:each="genre: ${mesgenres}">
+								<li th:utext="${genre.genreName}">Classique</li>
+
+							</ul>
+						</div>
+
+						<hr class="my-2" />
+
+						<div class="post-preview row">
+							<h3 class="post-title">Je joue du :</h3>
+						</div>
+
+						<table>
+							<tr>
+
+								<th></th>
+								<th></th>
+
+
+							</tr>
+							<tr th:each="instru: ${liste}">
+
+
+								<td th:utext="${instru.key.instrName}+ ' ' + ' '"></td>
+
+								<td th:if="${instru.value} == 1"><span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+									<span class="fa fa-star"></span> <span class="fa fa-star"></span>
+									<span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 2"><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+									<span class="fa fa-star"></span> <span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 3"><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+									<span class="fa fa-star"></span></td>
+								<td th:if="${instru.value} == 4"><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+								</td>
+								<td th:if="${instru.value} == 5"><span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span> <span
+									class="fa fa-star checked"></span></td>
+						</table>
+
+					</div>
+				</div>
+				<div class="card description">
+					<h2>Me découvrir</h2>
+					<p th:utext="${user.usersBio}">Grande amatrice de flute a bec,
+						je pratique tous les jours. je participe a de nombreux évènements
+						afin de faire connaître cet instrument qui pendant longtemps fut
+						laissé dans l'oubli. Je joue également du piano depuis mon enfance
+						et je sui capable de jouer la plupârt des grands morceaux
+						classiques comme le requiem dert ou la 4eme symphonie de
+						Beethoven.</p>
+					<!--           Modal -->
+					<div class="modal fade" id="modelId" tabindex="-1" role="dialog"
+						aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog modal-sm" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">sm</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">Body</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<h2 style="margin-bottom: 1rem;">Intéressé par </h2>
+
+				<div class="grid-container">
+					<div th:each="e : ${evenements}" class="grid-item">
+						<div class="card h-100">
+							<h5 class="card-header">
+								<a href="Event.html"
+									th:href="@{/pageEvent?id={id}(id=${e.evenementId})}"
+									th:utext="${e.evenementName}">Concert lyrique à l'opéra de
+									Blois</a>
+							</h5>
+
+							<div class="card-body">
+								<p class="card-text"
+									th:utext="${e.evenementDatedebut} + ' - ' + ${e.evenementDatefin}">
+								</p>
+								<p class="card-text"
+									th:utext="${e.evenementLieu} + ' - ' + ${e.evenementCity}">
+								</p>
+								<p class="card-text" th:utext="${e.evenementBio}"></p>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+
+				<h2 style="margin-bottom: 1rem;">Ses contacts</h2>
+				<div class=" grid-container2">
+					<div th:each="a : ${mesamis}" class="grid-item">
+
+						<div class="card h-100">
+							<img th:src="@{${user.photosImagePath}}"
+								class="card-img-top mx-auto" alt=imgProfil />
+
+							<div class="card-body">
+								<h5 class="card-title">
+									<a th:href="@{/profil?id={id}(id=${a.usersId})}"
+										th:utext="${a.usersFirstName} + ' ' + ${a.usersLastName}">Astroboy</a>
+								</h5>
+								<p class="card-text" th:utext="${a.usersBio} ">Lorem ipsum
+									dolor sit amet consectetur adipisicing elit. Animi soluta cum
+									repellendus earum neque, amet consectetur iure qui dicta
+									sapiente quam ipsam reprehenderit voluptatibus voluptas
+									eligendi commodi obcaecati? Cupiditate, odio.</p>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<footer>
+		<p>Notre app est la meilleure</p>
+	</footer>
+</body>
+</html>
