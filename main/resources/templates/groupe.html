@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title th:utext="${groupe.groupeName}">Groupe</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.js"></script>
+
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+	crossorigin="anonymous"></script>
+
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/stylesyohan.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<header class="bandeau">
+		<nav th:replace="header :: nav"></nav>
+
+		<div class="profile-picture">
+			<div th:if="${groupe.photos} != null">
+				<img th:src="@{${groupe.photosImagePath}}" />
+			</div>
+		</div>
+
+		<div class="titre">
+			<h1 th:utext="${groupe.groupeName}"></h1>
+		</div>
+		<div class="btn-header">
+			<input class="btn btn-secondary " type="submit" value="Chatter" />
+		</div>
+	</header>
+
+	<main>
+		<div class="body">
+			<div class="row justify-content-center">
+				<div class="col-md-12 col-lg-11">
+					<div class="sidenav">
+						<div class="contenue">
+							<div>
+								<!-- th:if="${!groupe.AudioPath.isEmpty()}" -->
+								<h2
+									class="d-flex align-items-center text-decoration-none border-bottom"
+									th:text="#{do}">Nos réalisations</h2>
+								<figure>
+									<audio controls>
+										<source th:src="@{${groupe.AudioPath}}" />
+									</audio>
+								</figure>
+								<div class="post-preview">
+									<h2 th:if="${!NosGenres.isEmpty()}"
+										class="d-flex align-items-center text-decoration-none border-bottom"
+										th:text="#{genre.predi}">Nos genres de prédilection</h2>
+									<ul th:each="genre: ${NosGenres}">
+										<li th:utext="${genre.genreName}"></li>
+									</ul>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+
+					<!-- Main Content-->
+					<div class="card wanted">
+						<h3 th:if="${groupe.groupeIsRecruting} == 'Oui'"
+							th:text="#{recruting}">Nous recherchons des membres!</h3>
+						<h3 th:unless="${groupe.groupeIsRecruting} == 'Non'"></h3>
+					</div>
+
+					<div th:if="(${groupe.groupeIsRecruting} == 'Oui')">
+
+						<div style="text-align: center;"
+							th:if=" ${groupe.users.usersId}!= ${user.usersId}">
+							<form th:action="@{/postuler}" method="post">
+								<input type="hidden" th:value="${groupe.groupeId}"
+									th:attr="name='id'" />
+								<div th:if="${!apply}" class="card description">
+
+									<button class="btn btn-primary" type="submit"
+										th:text="#{apply}">Postuler!</button>
+								</div>
+							</form>
+						</div>
+
+						<h3 th:unless="${groupe.groupeIsRecruting} == 'non'"></h3>
+					</div>
+
+
+
+
+
+
+
+					<div class="card description">
+						<h2 th:text="#{us}">Qui sommes-nous ?</h2>
+						<p th:utext="${groupe.groupeDescription}" />
+						<p th:utext="'frequence de rencontre '+${groupe.groupeFrequence}" />
+						<p th:text="'Nous contacter : '+${groupe.groupeEmail}">
+					</div>
+
+
+					<h2 th:text="#{members}">Nos Membres</h2>
+					<div class="grid-container-groupe">
+						<div th:each="member: ${NosMembres}">
+							<div class="grid-item">
+								<div class="card h-100">
+									<div class="row g-0">
+										<div class="col-md-4">
+											<img th:src="@{${member.photosImagePath}}" alt="...">
+										</div>
+										<div class="col-md-8">
+											<div class="card-body">
+
+
+												<a th:href="@{/profils?id={id}(id=${member.usersId})}"><p
+														class="card-title"
+														th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">
+													</p></a>
+												<p class="card-text" th:utext="${member.usersBio}">This
+													is a wider card with supporting text below as a natural
+													lead-in to additional content. This content is a little bit
+													longer.</p>
+												<p class="card-text">
+													<small class="text-muted">Last updated 3 mins ago</small>
+												</p>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div th:if=" ${groupe.users.usersId}== ${user.usersId}">
+						<div class="card wanted">
+							<div class="card description" style="text-align: center;">
+
+								<form th:action="@{/postulations}" method="get">
+									<input type="hidden" th:value="${groupe.groupeId}"
+										th:attr="name='id'" />
+
+
+									<button class="btn btn-primary" type="submit"
+										th:text="#{apply.list}">List of postulations</button>
+								</form>
+
+								<table
+									style="table-layout: fixed; width: 100%; text-align: center"
+									th:if="${postulations}">
+									<tr>
+										<th th:text="#{user}">User</th>
+										<th th:text="#{status}">Statut</th>
+										<th th:text="#{confirm}">Valider</th>
+										<th th:text="#{refuse}">Refuser</th>
+									</tr>
+									<tr th:each="pos:${postulations}">
+										<td th:utext="${pos.getUser()}"></td>
+										<td th:utext="${pos.getStatut()}"></td>
+										<td><form class="active"
+												th:action="@{/postulationvalider}" th:object="${pos}"
+												method="GET">
+												<button type="submit">
+													<i class="fas fa-check"></i>
+												</button>
+												<input type="hidden" th:value="${pos.getPostulationId()}" th:attr="name='id'"/>
+											</form></td>
+										<td><a class="active"
+											href="postulationrefuser?id=${pos.getPostulationId()}"><i
+												class="fa-solid fa-trash"></i></a></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<h3 th:unless="${groupe.groupeIsRecruting} == 'non'"></h3>
+				</div>
+
+
+			</div>
+		</div>
+	</main>
+	<footer th:include="footer :: footer"></footer>
+</body>
+
+
+</html>
