@@ -58,16 +58,16 @@ public class EventController {
 	@Autowired
 	private UsersInstruDAO uInstrRepo;
 
-
 	public EventController() {
 
 	}
 
 	@GetMapping("/pageEvent")
-	public String PageEvent(Model model, @RequestParam Integer id) {
+	public String PageEvent(Model model, Principal principal, @RequestParam Integer id) {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+		// Object principal =
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = userRepository.findByEmail(username);
 
 		model.addAttribute("user", activeuser);
@@ -240,8 +240,10 @@ public class EventController {
 		ev.setEvenementZip(event.getEvenementZip());
 
 		GenreMusic genremusic1 = gmr.findByGenreName(genre);
-
-		event.setGenreMusic(genremusic1);
+		System.out.println(genre);
+		System.out.println(genremusic1);
+		
+		ev.setGenreMusic(genremusic1);
 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"); // H majuscule pour etre en format
 																					// 24h
@@ -277,15 +279,12 @@ public class EventController {
 
 		return "EventNonLog";
 	}
-	
-	
+
 	@PostMapping("/process_creaevent")
-	public String processCreaEvent(Evenement event,  
-			@RequestParam("evenementDatedebut1") String datedebut,
+	public String processCreaEvent(Evenement event, @RequestParam("evenementDatedebut1") String datedebut,
 			@RequestParam("evenementDatefin1") String datefin, @RequestParam("genre") String genremusic,
 			@RequestParam("image") MultipartFile multipartFile) throws IOException {
-		
-		
+
 		System.out.println("tostring1 :  " + event.toString());
 
 		System.out.println(datedebut);
@@ -349,7 +348,7 @@ public class EventController {
 		UsersEvenement uEvent = new UsersEvenement(savedEvent, activeuser);
 		UsersEvenement saveduEvent = uer.save(uEvent);
 		System.out.println(saveduEvent.toString());
-		return "event_created_successfully";
+		return "redirect:/accueillogged";
 	}
 
 }

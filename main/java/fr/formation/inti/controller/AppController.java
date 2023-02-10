@@ -1,6 +1,7 @@
 package fr.formation.inti.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoLocalDateTime;
@@ -82,6 +83,8 @@ public class AppController {
 
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
+		List<GenreMusic> list = genreMusRepo.findAll();
+		model.addAttribute("genre", list);
 		model.addAttribute("user", new Users());
 		if (isAuthenticated()) {
 			return "redirect:/accueillogged";
@@ -158,10 +161,10 @@ public class AppController {
 	}
 
 	@GetMapping("/accueillogged")
-	public String accueil(Model model) {
+	public String accueil(Model model, Principal principal) {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+		//Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = userRepo.findByEmail(username);
 
 		List<Evenement> listEvent = new ArrayList<Evenement>();
@@ -265,8 +268,8 @@ public class AppController {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(auth.getName());
-		List<GenreMusic> list = genreMusRepo.findAll();
 		model.addAttribute("user", new Users());
+		List<GenreMusic> list = genreMusRepo.findAll();
 		System.out.println(list);
 		model.addAttribute("genre", list);
 		if (isAuthenticated()) {
@@ -281,9 +284,9 @@ public class AppController {
 	
 
 	@GetMapping("/listeevent")
-	public String listEvent(Model model) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+	public String listEvent(Model model, Principal principal) {
+		//Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = userRepo.findByEmail(username);
 
 		List<UsersEvenement> listuEvenement = uEventRepo.findAllByUsers(activeuser);

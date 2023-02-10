@@ -11,4 +11,5 @@ public interface PostulationRepository extends JpaRepository<Postulations, Integ
 
 	public List<Postulations> findAllByGroupe(Groupe gr);
 
+
 }

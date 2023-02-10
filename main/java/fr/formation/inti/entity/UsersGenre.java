@@ -1,11 +1,15 @@
 package fr.formation.inti.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,33 +21,33 @@ import javax.persistence.Table;
 @Table(name = "users_genre", catalog = "bd_music_project")
 public class UsersGenre implements java.io.Serializable{
 	
-	private UsersGenreId id;
+	private Integer id;
 	private GenreMusic genreMusic;
 	private Users users;
 
 	public UsersGenre() {
 	}
 
-	public UsersGenre(UsersGenreId id, GenreMusic genreMusic, Users users) {
-		this.id = id;
+	public UsersGenre( GenreMusic genreMusic, Users users) {
+
 		this.genreMusic = genreMusic;
 		this.users = users;
 	}
 
-	@EmbeddedId
-
-	@AttributeOverrides({ @AttributeOverride(name = "usersId", column = @Column(name = "Users_id", nullable = false)),
-			@AttributeOverride(name = "genreId", column = @Column(name = "Genre_id", nullable = false)) })
-	public UsersGenreId getId() {
-		return this.id;
+	
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "Users_genrekey", unique = true, nullable = false)
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId(UsersGenreId id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Genre_id", nullable = false, insertable = false, updatable=false )
+	@JoinColumn(name = "Genre_id", nullable = false )
 	public GenreMusic getGenreMusic() {
 		return this.genreMusic;
 	}
@@ -53,7 +57,7 @@ public class UsersGenre implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Users_id", nullable = false, insertable = false, updatable=false )
+	@JoinColumn(name = "Users_id", nullable = false)
 	public Users getUsers() {
 		return this.users;
 	}

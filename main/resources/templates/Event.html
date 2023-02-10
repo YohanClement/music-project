@@ -43,20 +43,22 @@
 
 
 		<div class="titre">
-			<h1 th:utext="${event.evenementName}">Prénom Nom</h1>
+			<h1 th:utext="${event.evenementName}"
+				th:text="#{firstname} + ' '+ #{lastname}">Prénom Nom</h1>
 		</div>
 		<div class="btn-header">
-			<a th:if="${!interrested}" th:href="@{/interested?id={id}(id=${event.evenementId})}"
+			<a th:if="${!interrested}"
+				th:href="@{/interested?id={id}(id=${event.evenementId})}"
 				onclick="return confirm('Etes-vous intéressé par cet évènement?');">
-				<button class="btn btn-secondary" data-toggle="modal" type="submit">
-					Intéressé</button>
+				<button class="btn btn-secondary" data-toggle="modal" type="submit"
+					th:text="#{interested}">Intéressé</button>
 
 
 			</a>
 			<div th:if="${userCrea.usersId}== ${user.usersId}">
 				<a th:href="@{/EditEvent?id={id} (id=${event.evenementId})}"><button
-						class="btn btn-secondary" data-toggle="modal" type="submit">
-						Edit Event</button></a>
+						class="btn btn-secondary" data-toggle="modal" type="submit"
+						th:text="#{Event.edit}">Edit Event</button></a>
 			</div>
 
 		</div>
@@ -71,7 +73,7 @@
 					<div class="contenue">
 						<div>
 							<div class="post-preview">
-								<h2 class="post-title">Organisé par</h2>
+								<h2 class="post-title" th:text="#{organised}">Organisé par</h2>
 								<div>
 
 									<img th:src="@{${userCrea.photosImagePath}}"
@@ -81,7 +83,7 @@
 									<!--<button class="card-title">-->
 									<div style="text-align: center">
 										<h4 class="nomprofil">
-											<a th:href="@{/profil?id={id}(id=${userCrea.usersId})}"
+											<a th:href="@{/profils?id={id}(id=${userCrea.usersId})}"
 												th:utext="${userCrea.usersFirstName} + ' ' + ${userCrea.usersLastName}">Prénom
 												Nom</a>
 										</h4>
@@ -99,12 +101,10 @@
 				<!-- Divider-->
 				<br />
 				<div class="corpsgauche">
-
-					<!-- L'évènement-->
 					<div class="card">
-						<h3 class="title">Description</h3>
+						<h3 class="title" th:text="#{bio}">Description</h3>
 						<div class="card-Event" th:utext="${event.evenementBio}">
-							
+
 							<!-- on pourrait rajouter un lien vers les invités ou un pop up-->
 
 						</div>
@@ -113,7 +113,7 @@
 					</div>
 					<br />
 					<div class="card">
-						<h3 class="title">Détails</h3>
+						<h3 class="title" th:text="#{details}">Détails</h3>
 						<div class="card-Event">
 							<p
 								th:utext=" 'Dates : ' + ${event.evenementDatedebut} + ' - ' +${event.evenementDatefin}">
@@ -132,7 +132,7 @@
 
 					</div>
 					<div class="card">
-						<h2 class="title">L'adresse</h2>
+						<h2 class="title" th:text="#{address}">L'adresse</h2>
 						<div class="card-Event"></div>
 						<div id="map">
 							<!-- Ici s'affichera la carte -->
@@ -145,7 +145,8 @@
 				</div>
 				<br />
 				<div th:if="${!userinterressed.isEmpty()}" class="card">
-					<h2 class="title">Les personnes intéressées</h2>
+					<h2 class="title" th:text="#{interest.by}">Les personnes
+						intéressées</h2>
 
 					<ul th:each="i: ${userinterressed}">
 						<li><a th:href="@{/profils?id={id}(id=${i.usersId})}"

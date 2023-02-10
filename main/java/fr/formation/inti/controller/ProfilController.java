@@ -47,6 +47,7 @@ import fr.formation.inti.repository.EvenementRepository;
 import fr.formation.inti.repository.GenreMusicRepository;
 import fr.formation.inti.repository.GroupeRepository;
 import fr.formation.inti.repository.MusicInstrumentRepository;
+import fr.formation.inti.repository.UserGenreRepository;
 import fr.formation.inti.repository.UserRepository;
 import fr.formation.inti.repository.UserRoleRepository;
 import fr.formation.inti.repository.UsersInstruDAO;
@@ -77,13 +78,16 @@ public class ProfilController {
 
 	@Autowired
 	private GroupeRepository grouprep;
+	
+	@Autowired
+	private UserGenreRepository ugr;
 
 	// renvoie sur le profil de la personne non conenecté
 	@GetMapping("/profils")
-	public String profileother(Model model, @RequestParam("id") Integer id) {
+	public String profileother(Model model, @RequestParam("id") Integer id, Principal principal) {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+		//Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = userRepository.findByEmail(username);
 
 		if (activeuser.getUsersId() == id) {
@@ -94,7 +98,7 @@ public class ProfilController {
 			Set<UsersGenre> style = user.getUsersGenres();
 			List<GenreMusic> genre = new ArrayList<GenreMusic>();
 			for (UsersGenre g : style) {
-				Integer id1 = g.getId().getGenreId();
+				Integer id1 = g.getGenreMusic().getGenreId();
 				System.out.println("id : " + id1);
 				GenreMusic m = gmr.findById(id1).get();
 				System.out.println("genre musique " + m.getGenreName());
@@ -185,17 +189,17 @@ public class ProfilController {
 	}
 
 	@GetMapping("/profil")
-	public String myprofile(Model model) {
+	public String myprofile(Model model, Principal principal) {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+		//Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = userRepository.findByEmail(username);
 
 		// recupérer la liste des styles musicaux du profil
 		Set<UsersGenre> style = activeuser.getUsersGenres();
 		List<GenreMusic> genre = new ArrayList<GenreMusic>();
 		for (UsersGenre g : style) {
-			Integer id1 = g.getId().getGenreId();
+			Integer id1 = g.getGenreMusic().getGenreId();
 			System.out.println("id : " + id1);
 			GenreMusic m = gmr.findById(id1).get();
 			System.out.println("genre musique " + m.getGenreName());
@@ -280,11 +284,12 @@ public class ProfilController {
 
 	@PostMapping("/process_register")
 	public String processRegister(@Valid @ModelAttribute("user") Users user, BindingResult br,
-			@RequestParam("instruments") String instrument, @RequestParam("niveau") Integer niveau,
+			@RequestParam("instruments") String instrument, @RequestParam("niveau") Integer niveau,@RequestParam("genre") String genremusic,
 			@RequestParam("image") MultipartFile multipartFile, @RequestParam("audios") MultipartFile multipartFile1,
 			Model model) throws IOException {
 		if (br.hasErrors()) {
 			model.addAttribute("user", user);
+			model.addAttribute("genre", gmr.findAll());
 			return "creationprofil";
 		}
 //		System.out.println(user);
@@ -304,8 +309,9 @@ public class ProfilController {
 		// Sauvegarde de l'audio maquette
 		String fileName1 = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
 		user.setAudio(fileName1);
+		
 
-		// Settings roles
+		// Enregistrement du user
 		Users savedUser = userRepository.save(user);
 		UserRoles userrole = new UserRoles(user, "USER", user.getUsersEmail());
 		rolesRepo.save(userrole);
@@ -324,6 +330,9 @@ public class ProfilController {
 		String uploadDir1 = "user-audio/" + savedUser.getUsersId();
 		FileUploadUtil.saveFile(uploadDir1, fileName1, multipartFile1);
 
+		GenreMusic g = gmr.findByGenreName(genremusic);
+		UsersGenre usergenre = new UsersGenre(g, savedUser);
+		ugr.save(usergenre);
 		return "redirect:/index";
 	}
 
@@ -363,9 +372,9 @@ public class ProfilController {
 	@PostMapping("/update")
 	public String update(Users u, @RequestParam("instruments") String instrument,
 			@RequestParam("niveau") Integer niveau, @RequestParam("image") MultipartFile multipartFile,
-			@RequestParam("audios") MultipartFile files) throws IOException {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+			@RequestParam("audios") MultipartFile files, Principal principal) throws IOException {
+		//Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username =  principal.getName();
 		Users user = userRepository.findByEmail(username);
 
 		user.setUsersBio(u.getUsersBio());

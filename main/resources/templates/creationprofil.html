@@ -31,20 +31,29 @@
 		<nav th:fragment="header"
 			class="navbar navbar-expand-lg navbar-light topright">
 			<div class="container-fluid">
+
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav">
 						<!-- home -->
 						<li class="nav-item"><a class="nav-link" href="index"><i
 								class="fas fa-home fa-2x"></i></a></li>
 					</ul>
+
+					<div class="lang">
+						<a href="?lang=en"> <img src="/img/anglais.png" width="50"
+							height="30"></img>
+						</a> <a href="?lang=fr"><img src="/img/france.jpg" width="50"
+							height="30"></img> </a>
+					</div>
 				</div>
 			</div>
 		</nav>
-		<div class="titre">
-			<h1 style="text-align: center">Création de votre profil</h1>
-			<!-- <span class="subheading">ll</span> -->
+		<br /> <br /> <br>
+		<div style="text-align: center; color: aliceblue;">
+			<h1 th:text=#{profile.create}></h1>
 		</div>
 	</header>
+
 	<main>
 		<div class="body">
 			<div class="container">
@@ -57,12 +66,12 @@
 						<div class="row gx-5 gx-lg-8 justify-content-center">
 							<div class="col-lg-9">
 								<div class="post-preview">
-									<h2>Qui êtes vous ?</h2>
+									<h2 th:text="#{Qui}">Qui êtes vous ?</h2>
 									<!--Adds a heading to the form-->
 									<div>
-										<label class="form-label" for="">FirstName :</label> <input
-											class="form-control" type="text" name="usersFirstName"
-											size="35" maxlength="35" value="" required />
+										<label class="form-label" for="" th:text="#{firstname}">FirstName
+											:</label> <input class="form-control" type="text"
+											name="usersFirstName" size="35" maxlength="35" value="" />
 
 										<ul>
 											<li th:each="err : ${#fields.errors('usersFirstName')}"
@@ -72,9 +81,9 @@
 									</div>
 
 									<div>
-										<label class="form-label" for="">LastName :</label> <input
-											class="form-control" type="text" name="usersLastName"
-											size="35" maxlength="35" value="" required />
+										<label class="form-label" for="" th:text="#{lastname}">LastName
+											:</label> <input class="form-control" type="text"
+											name="usersLastName" size="35" maxlength="35" value="" />
 
 										<ul>
 											<li th:each="err : ${#fields.errors('usersLastName')}"
@@ -84,105 +93,124 @@
 									</div>
 
 									<div class="mb-3">
-										<label for="" class="form-label">Adresse Mail</label> <input
-											type="email" class="form-control" name="usersEmail"
-											aria-describedby="emailHelp" required />
-										<div id="emailHelp" class="form-text">Votre adresse est
+										<label for="" class="form-label" th:text="#{email}">Adresse
+											Mail</label> <input type="email" class="form-control"
+											name="usersEmail" aria-describedby="emailHelp" />
+										<div id="emailHelp" class="form-text"
+											th:text="#{email.message}">Votre adresse est
 											confidentielle, nous ne la partageons pas</div>
 										<div th:if="${#fields.hasErrors('usersEmail')}"
 											style="color: red" th:errors="*{email}"></div>
 									</div>
+
+									<div class="mb-3">
+										<label class="form-label" th:text="#{password}">Mot de
+											passe</label> <input type="password" name="password"
+											class="form-control" aria-describedby="passwordHelpBlock" />
+										<div id="passwordHelpBlock" class="form-text"
+											th:text="#{password.message}">Your password must be
+											8-20 characters long, contain letters and numbers, and must
+											not contain spaces, special characters, or emoji.</div>
+										<div th:if="${#fields.hasErrors('password')}"
+											style="color: red" th:errors="*{password}"></div>
+									</div>
 								</div>
-								<div class="mb-3">
-									<label class="form-label">Mot de passe</label> <input
-										type="password" name="password" class="form-control"
-										aria-describedby="passwordHelpBlock" required />
-									<div id="passwordHelpBlock" class="form-text">Your
-										password must be 8-20 characters long, contain letters and
-										numbers, and must not contain spaces, special characters, or
-										emoji.</div>
-									<div th:if="${#fields.hasErrors('password')}"
-										style="color: red" th:errors="*{password}"></div>
+								<label for="password" class="form-label"
+									th:text="#{password.confirm}">Confirmation du mot de
+									passe</label> <input class="form-control" type="password"
+									name="password2" aria-describedby="passwordHelpBlock" />
+
+								<div>
+									<label class="form-label" for="zip" th:text="#{Zip}">Code
+										Postal</label> <input class="postal-code form-control" id="zip"
+										name="usersZip" autocomplete="zip" enterkeyhint="next" />
 								</div>
-							</div>
-							<label for="password" class="form-label">Confirmation du
-								mot de passe</label> <input class="form-control" type="password"
-								name="password2" aria-describedby="passwordHelpBlock" />
+								<div>
+									<label class="form-label" for="city" th:text="#{City}">City</label>
+									<input class="form-control" type="text" id="city"
+										name="usersCity" /> <label class="form-label" for="file"
+										th:text="#{About}">Parlez nous de vous</label>
 
-							<div>
-								<label class="form-label" for="zip">Code Postal</label> <input
-									class="postal-code form-control" id="zip" name="usersZip"
-									autocomplete="zip" enterkeyhint="next" />
-							</div>
-							<div>
-								<label class="form-label" for="city">City</label> <input
-									class="form-control" type="text" id="city"
-									name="usersCity" /> <label class="form-label" for="file">Parlez
-									nous de vous</label>
-
-								<div th:if="${#fields.hasErrors('usersCity')}"
-									style="color: red" th:errors="*{required}"></div>
+									<div th:if="${#fields.hasErrors('usersCity')}"
+										style="color: red" th:errors="*{required1}"></div>
 
 
-								<textarea class="form-control" name="usersBio" cols="30"
-									rows="4" required></textarea>
-								<div th:if="${#fields.hasErrors('usersBio')}" style="color: red"
-									th:errors="*{required}"></div>
+									<textarea class="form-control" name="usersBio" cols="30"
+										rows="4"></textarea>
+									<div th:if="${#fields.hasErrors('usersBio')}"
+										style="color: red" th:errors="*{sizee}"></div>
+								</div>
+								<br>
+
+								<div>
+									<label th:text="#{genre}">Genre musical</label> <select
+										class="form-select" name="genre">
+										<option th:each="entry: ${genre}"
+											th:value="${entry.genreName}" th:text="${entry.genreName}"></option>
+									</select><br>
+								</div>
 								<hr />
-							</div>
-						</div>
-						<div class="form-label">
-							<div class="post-preview">
-								<h2>Pour vous connaître un peu plus :</h2>
-								<br> <label>Sélectionner un fichier image </label> <input
-									class="form-control" type="file" name="image"
-									accept="image/png, image/jpeg" /> <label class="form-label"
-									for="file">Sélectionner un fichier audio</label> <input
-									class="form-control" type="file" name="audios" accept="audio/*" />
+
+								<div class="form-label">
+									<div class="post-preview">
+										<h2 th:text="#{knowmore}"></h2>
+										<br> <label th:text="#{photos.select}">Sélectionner
+											un fichier image </label> <input class="form-control" type="file"
+											name="image" accept="image/png, image/jpeg" /> <label
+											class="form-label" for="file" th:text="#{audio.select}">Sélectionner
+											un fichier audio</label> <input class="form-control" type="file"
+											name="audios" accept="audio/*" />
 
 
-								<!--  <div class="post-preview">
+										<!--  <div class="post-preview">
 							<label>Audio: </label><input
 								type="file" name="audios" accept="audio/*" /> <br />
 							<br />
 						</div>
 										<!-- 	<button class="btn btn-outline-secondary" type="button">
 							Envoyer</button> -->
-							</div>
-							<br />
-							<hr />
-							<div class="form-label">
-								<div class="post-preview">
-									<h2>De quel instrument de musique jouez vous ?</h2>
-									<br> <select class="form-select" name="instruments">
-										<option value="piano" selected>Piano</option>
-										<option value="guitare">Guitare</option>
-										<option value="flute">Flute</option>
-										<option value="MAO">MAO</option>
-										<option value="violon">Violon</option>
-										<option value="autre">Autre: préciser</option>
+									</div>
+									<br />
+									<hr />
+									<div class="form-label">
+										<div class="post-preview">
+											<h2 th:text="#{instru.what}">De quel instrument de
+												musique jouez-vous ?</h2>
+											<br> <select class="form-select" name="instruments">
+												<option value="piano" selected>Piano</option>
+												<option value="guitare">Guitare</option>
+												<option value="flute">Flute</option>
+												<option value="MAO">MAO</option>
+												<option value="violon">Violon</option>
+												<option value="autre">Autre: préciser</option>
 
-									</select> <label class="form-label" for="file">Quel est votre
-										niveau ?</label> <input type="radio" name="niveau" value="1"  checked/>Débutant
-									<input type="radio" name="niveau" value="2" />Initié <input
-										type="radio" name="niveau" value="3" />Intermédiaire <input
-										type="radio" name="niveau" value="4" />Bon <input
-										type="radio" name="niveau" value="5" />Avancé
+											</select> <label class="form-label" for="file"
+												th:text="#{proficiency}">Quel est votre niveau ?</label> <input
+												type="radio" name="niveau" value="1" th:text="#{beginner}"
+												checked /><input type="radio" name="niveau"
+												value="2" th:text="#{initiated}" /> <input
+												type="radio" name="niveau" value="3"
+												th:text="#{intermediate}" /><input
+												type="radio" name="niveau" value="4" th:text="#{good}" />
+											<input type="radio" name="niveau" value="5"
+												th:text="#{advance}" />
+										</div>
+									</div>
+
+									<div class="d-flex justify-content-end mb-4">
+										<button class="btn btn-primary" type="submit"
+											th:text="#{submit}">Créer le profil</button>
+										<br>
+									</div>
 								</div>
-							</div>
-
-							<div class="d-flex justify-content-end mb-4">
-								<button class="btn btn-primary" type="submit">Créer le
-									profil</button>
-								<br>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			
-		</div>		
-		<br>
+
+			<br>
+		</div>
 
 	</main>
 	<footer th:include="footer :: footer"></footer>

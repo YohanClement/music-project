@@ -210,12 +210,13 @@ audio {
 	padding: 1rem;
 	border-width: fit-content;
 	margin: 2rem;
-	margin-top: 0.05rem;
+	margin-top: 1rem;
+	margin-left: 0.05rem;
 }
 
 .grid-container-groupe {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: 30% 30% 30%;
 	column-gap: 1rem;
 	row-gap: 2rem;
 	padding-bottom: 2rem;

@@ -25,7 +25,7 @@
 		<nav th:replace="header :: nav"></nav>
 
 		<div class="titre">
-			<h1>Création d'un évènement</h1>
+			<h1 th:text="#{Event.edit}">Création d'un évènement</h1>
 		</div>
 
 	</header>
@@ -37,56 +37,61 @@
 			<div class="body">
 				<div class="container">
 					<div class="card">
+			<br>
 
 						<div class="row gx-5 gx-lg-8 justify-content-center">
 							<div class="col-lg-9">
 								<section>
 									<div class="post-preview">
-										<h2>Informations relative à l'évènement</h2>
+										<h2 th:text="#{Event.info}">Informations relative à
+											l'évènement</h2>
 										<div>
-											<label for="Nom de l'évènement" class="form-label">Nom
-												de l'évènement : </label> <input type="text" class="form-control"
-												id="Nom de l'évènement" name="evenementName"
-												th:field="*{evenementName}" required />
+											<label for="Nom de l'évènement" class="form-label"
+												th:text="#{Event.name}">Nom de l'évènement : </label> <input
+												type="text" class="form-control" id="Nom de l'évènement"
+												name="evenementName" th:field="*{evenementName}" required />
 										</div>
 										<div>
-											<label class="form-label" for="Lieu de l'évènement">Lieu
-												de l'évènement : </label> <input type="text"
-												id="Lieu de l'évènement" name="evenementLieu"
+											<label class="form-label" for="Lieu de l'évènement"
+												th:text="#{Event.place}">Lieu de l'évènement : </label> <input
+												type="text" id="Lieu de l'évènement" name="evenementLieu"
 												class="form-control" th:field="*{evenementLieu}" required />
 										</div>
 										<div>
-											<label class="form-label" for="address">Addresse</label> <input
-												type="text" class="addresse form-control"
+											<label class="form-label" for="address" th:text="#{address}">Addresse</label>
+											<input type="text" class="addresse form-control"
 												id="evenementAdres" name="evenementAdress"
 												th:field="*{evenementAdress}" />
 										</div>
 										<div>
-											<label class="form-label" for="zip">Code Postal</label> <input
-												type="text" class="postal-code form-control"
+											<label class="form-label" for="zip" th:text="#{Zip}">Code
+												Postal</label> <input type="text" class="postal-code form-control"
 												name="evenementZip" enterkeyhint="next"
 												th:field="*{evenementZip}" />
 										</div>
 										<div>
-											<label class="form-label" for="city">City</label> <input
-												class="form-control" required type="text"
+											<label class="form-label" for="city" th:text="#{City}">City</label>
+											<input class="form-control" required type="text"
 												name="evenementCity" th:field="*{evenementCity}" />
 										</div>
 										<div>
-											<label class="form-label" for="Début"> Date de début
-											</label> <input type="datetime-local" class="form-control"
-												name="debut" th:value="${debut}" required />
+											<label class="form-label" for="Début" th:text="#{date.start}">
+												Date de début </label> <input type="datetime-local"
+												class="form-control" name="debut" th:value="${debut}"
+												required />
 										</div>
 										<div>
-											<label class="form-label" for="Fin"> Date de fin </label> <input
-												type="datetime-local" name="fin" th:value="${fin}" required
-												class="form-control" />
+											<label class="form-label" for="Fin" th:text="#{date.end}">
+												Date de fin </label> <input type="datetime-local" name="fin"
+												th:value="${fin}" required class="form-control" />
 										</div>
 										<div>
-											<label class="form-label" for="type d'évènement">Type
-												d'évènement</label> <select class="form-select" name="evenementType"
+											<label class="form-label" for="type d'évènement"
+												th:text="#{Event.type}">Type d'évènement</label> <select
+												class="form-select" name="evenementType"
 												th:field="*{evenementType}" id="type d'évènement" required>
-												<option value="">--Please choose an option--</option>
+												<option value="" th:text="#{Option}">--Please
+													choose an option--</option>
 												<option value="Concert">Concert</option>
 												<option value="Jam session">Jam session</option>
 												<option value="Scène ouverte">Scène ouverte</option>
@@ -94,23 +99,22 @@
 											</select>
 										</div>
 										<div>
-											<label for="Genre musical">Genre musical</label> <select
-												class="form-select" name="genre">
+											<label for="Genre musical" th:text="#{genre}">Genre
+												musical</label> <select class="form-select" name="genre">
 												<option th:each="entry: ${genre}"
-													th:value="${entry.genreId}" th:text="${entry.genreName}"></option>
+													th:value="${entry.genreName}" th:text="${entry.genreName}"></option>
 											</select><br>
 										</div>
 									</div>
 								</section>
-
 								<section>
 									<div class="post-preview">
-										<label class="form-label" for="Description">Description</label>
-										<!-- impose que la description soient au minimum de 50 max 500, et que la description soit complétée pour soumettre le formulaire -->
+										<label class="form-label" for="Description" th:text="#{bio}"></label>
+			
 										<textarea class="form-control" id="Description"
 											name="evenementBio" th:field="*{evenementBio}" rows="5"
 											cols="60" maxlength="2000" required></textarea>
-										<!-- Divider-->
+										
 										<hr class="my-4" />
 										<h2>Informations Supplémentaires</h2>
 										<div class="post-preview">
@@ -147,15 +151,14 @@
 									</div>
 								</section>
 
-								<!-- Divider-->
+
 								<hr class="my-4" />
-								<!-- confidentialité de l'évènement -->
+								Confidentialité de l'évènement
 								<section>
 									<div class="EventConf">
 										<label class="form-label" for="EventConfidentiality">Confidentialité
-											de l'évènement </label>
-										<!-- l'évènement est par défaut public  -->
-										<select class="form-select" name="EventConfidentiality"
+											de l'évènement </label> l'évènement est par défaut public <select
+											class="form-select" name="EventConfidentiality"
 											id="EventConfidentiality">
 											<option value="Private">Privé</option>
 											<option selected value="Public">Public</option>
@@ -170,7 +173,7 @@
 										</div>
 									</div>
 								</section>
-								<!-- Divider-->
+
 
 								<section class="invit">
 									<button class="btn btn-primary" type="button">Inviter
@@ -181,8 +184,8 @@
 									th:field="*{evenementId}">
 
 								<div class="d-flex justify-content-end mb-4">
-									<button class="btn btn-primary" type="submit">Editer
-										mon évènement</button>
+									<button class="btn btn-primary" type="submit"
+										th:text="#{submit}">Editer mon évènement</button>
 
 								</div>
 							</div>

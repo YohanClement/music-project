@@ -26,129 +26,125 @@
 		<nav th:replace="header :: nav"></nav>
 
 		<div class="titre">
-			<h1 style="text-align: center">Création du profil groupe</h1>
+			<h1 th:texte="#{Group.edit}" style="text-align: center">Création
+				du profil groupe</h1>
 
 		</div>
 	</header>
+	<main>
+		<form th:action="@{/updategroupe}" th:object="${Mygroupe}"
+			method="post" enctype="multipart/form-data">
+			<!-- Post preview-->
+			<div class="body ">
+				<div class="container">
+					<div class="card">
+						<div class="row gx-5 gx-lg-8 justify-content-center">
 
-	<form th:action="@{/updategroupe}" th:object="${Mygroupe}"
-		method="post" enctype="multipart/form-data">
-		<!-- Post preview-->
-		<div class="body ">
-			<div class="container">
-				<div class="card">
-					<div class="row gx-5 gx-lg-8 justify-content-center">
+							<div class="col-lg-9">
+								<div class="post-preview">
+									<br></br>
+									<h2 th:text="#{Qui}">Qui êtes-vous ?</h2>
+									<!--Adds a heading to the form-->
+									<div>
+										<label class="form-label" th:text="#{groupe.name}">Nom
+											du groupe</label> <input class="form-control" type="text"
+											name="groupeName" size="35" maxlength="35"
+											th:field="*{groupeName}" required />
+										<!-- Input type text for small texts, specify size -->
+									</div>
 
-						<div class="col-lg-9">
-							<div class="post-preview">
-								<br></br>
-								<h2>Qui êtes-vous ?</h2>
-								<!--Adds a heading to the form-->
-								<div>
-									<label class="form-label">Nom du groupe</label> <input
-										class="form-control" type="text" name="groupeName" size="35"
-										maxlength="35" th:field="*{groupeName}" required />
-									<!-- Input type text for small texts, specify size -->
+									<input type="hidden" th:value="${groupeId}" id="gid"
+										th:field="*{groupeId}"> <label class="form-label"
+										th:text="#{email}">Adresse mail</label> <input type="email"
+										class="form-control" aria-describedby="emailHelp"
+										th:field="*{groupeEmail}" name="groupeEmail" required />
+									<div id="emailHelp" class="form-text"
+										th:text="#{email.message}">Votre adresse est
+										confidentielle, nous ne la partageons pas</div>
+
+
+									<div>
+										<label class="form-label" th:for="file" th:text="#{About}">Parlez
+											nous de vous</label>
+										<textarea class="form-control" name="groupeDescription"
+											cols="30" rows="4" maxlength="2000"
+											placeholder="Décrire le groupe, max 2000 caractères"
+											th:field="*{groupeDescription}"></textarea>
+									</div>
+									<label class="form-label" th:for="frequence"
+										th:text="#{frequency}">A quelle fréquence répétez vous
+										?</label> <br /> <input class="form-check-input" type="radio"
+										name="groupeFrequence" value="Une fois par mois" checked
+										th:text="#{frequency.1}" /> <input class="form-check-input"
+										type="radio" name="groupeFrequence" value="Deux fois par mois"
+										th:text="#{frequence.2}" /> <input class="form-check-input"
+										type="radio" name="groupeFrequence"
+										value="Une fois par semaine" th:text="#{frequence.3}" /> <input
+										class="form-check-input" type="radio" name="groupeFrequence"
+										value="Deux fois par semaine" th:text="#{frequence.4}" /> <input
+										class="form-check-input" type="radio" name="groupeFrequence"
+										value="Plus de deux fois par semaine" th:text="#{frequence.5}" />
+									<input class="form-check-input" type="radio"
+										name="groupeFrequence" value="Autre" th:text="#{other}" /> <br>
+
+									<div class="form-check form-switch" style="text-align: left">
+										<input class="form-check-input" type="checkbox" role="switch"
+											name="groupeIsRecruting"> <label
+											class="form-check-label" for="groupeIsRecruting"
+											th:text="#{member.recruting}">Nous recherchons un
+											membre</label>
+									</div>
+
+
+									<hr>
+									<div class="post-preview">
+										<h2 th:text="#{profile.photo}">Photo de profil :</h2>
+
+										<div>
+											<label th:text="#{photos.select}">Photos: </label> <input
+												type="file" name="image" accept="image/png, image/jpeg" />
+											<br /> <br />
+										</div>
+
+									</div>
+									<hr />
+
+									<div class="post-preview">
+										<h2 th:text="#{genre.what}">Quel type de musique jouez
+											vous principalement?</h2>
+
+										<select class="form-select" name="genre">
+											<option></option>
+											<option th:each="entry: ${genre}" th:value="${entry.genreId}"
+												th:text="${entry.genreName}"></option>
+										</select><br>
+
+									</div>
+									<div class="post-preview">
+										<hr>
+										<h2 th:text="#{playlist}">Votre playlist</h2>
+
+										<div class="post-preview">
+											<label th:text="#{audio.select}">Audio: </label><input
+												type="file" name="audios" accept="audio/*" /> <br /> <br />
+										</div>
+
+										<div class="d-flex justify-content-end mb-4">
+											<button type="submit" class="btn btn-primary"
+												th:text="#{submit}">Editer le groupe</button>
+
+
+										</div>
+									</div>
+									<br>
 								</div>
-
-								<input type="hidden" th:value="${groupeId}" id="gid"
-									th:field="*{groupeId}"> 
-									
-									
-									<label class="form-label">Adresse
-									mail</label> <input type="email" class="form-control"
-									aria-describedby="emailHelp" th:field="*{groupeEmail}"
-									name="groupeEmail" required />
-								<div id="emailHelp" class="form-text">Votre adresse est
-									confidentielle, nous ne la partageons pas</div>
-							</div>
-
-							<div>
-								<label class="form-label" th:for="file">Parlez nous de
-									vous</label>
-								<textarea class="form-control" name="groupeDescription"
-									cols="30" rows="4" maxlength="2000"
-									placeholder="Décrire le groupe, max 2000 caractères"
-									th:field="*{groupeDescription}"></textarea>
-							</div>
-
-							<label class="form-label" th:for="frequence">A quelle
-								fréquence répétez vous ?</label> <br /> <input class="form-check-input"
-								type="radio" name="groupeFrequence" value="Une fois par mois"
-								checked /> Une fois par mois <input class="form-check-input"
-								type="radio" name="groupeFrequence" value="Deux fois par mois" />
-							Deux fois par mois <input class="form-check-input" type="radio"
-								name="groupeFrequence" value="Une fois par semaine" /> Une fois
-							par semaine <input class="form-check-input" type="radio"
-								name="groupeFrequence" value="Deux fois par semaine" /> Deux
-							fois par semaine <input class="form-check-input" type="radio"
-								name="groupeFrequence" value="Plus de deux fois par semaine" />
-							Plus de deux fois par semaine <input class="form-check-input"
-								type="radio" name="groupeFrequence" value="Autre" /> Autre
-						</div>
-						<br>
-
-						<div class="form-check form-switch" style="text-align: left">
-							<input class="form-check-input" type="checkbox" role="switch"
-								name="groupeIsRecruting"> <label
-								class="form-check-label" for="groupeIsRecruting">Nous
-								recherchons un membre</label>
-						</div>
-
-
-						<hr>
-						<div class="post-preview">
-							<h2>Photo de profil :</h2>
-
-							<div>
-								<label>Photos: </label> <input type="file" name="image"
-									accept="image/png, image/jpeg" /> <br /> <br />
-							</div>
-
-						</div>
-						<hr />
-
-						<div class="post-preview">
-							<h2>Quel type de musique jouez vous principalement?</h2>
-							<!-- <br> <select class="form-select" id="groupeTypeMusique"
-									name="groupeTypeMusique">
-									<option value="Rock">Rock</option>
-									<option value="Metal">Metal</option>
-									<option value="Jazz">Jazz</option>
-									<option value="Pop">Pop</option>
-									<option value="Classique">Classique</option>
-									<option value="Autre">Autre</option>
-								</select> -->
-
-							<select class="form-select" name="genre">
-								<option></option>
-								<option th:each="entry: ${genre}" th:value="${entry.genreId}"
-									th:text="${entry.genreName}"></option>
-							</select><br>
-
-						</div>
-						<div class="post-preview">
-							<hr>
-							<h2>Votre playlist</h2>
-
-							<div class="post-preview">
-								<label>Audio: </label><input type="file" name="audios"
-									accept="audio/*" /> <br /> <br />
-							</div>
-
-							<div class="d-flex justify-content-end mb-4">
-								<button type="submit" class="btn btn-primary">Editer le
-									groupe</button>
-
-
 							</div>
 						</div>
-						<br>
 					</div>
-				</div>
+				</div><br>
 			</div>
-		</div>
-	</form>
+		</form>
+	</main>
 	<footer th:include="footer :: footer"></footer>
 
 </body>

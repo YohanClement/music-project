@@ -45,9 +45,9 @@
 
 								<div
 									class="d-flex align-items-center link-dark text-decoration-none border-bottom">
-									<h3>Mes réalisations</h3>
+									<h3 th:text="#{do}">Mes réalisations</h3>
 								</div>
-								
+
 								<br>
 
 
@@ -62,8 +62,8 @@
 							<hr th:if="${!mesgenres.isEmpty()}" class="my-2">
 
 							<div class="col">
-								<h3 th:if="${!mesgenres.isEmpty()}" class="post-title">Gouts
-									musicaux</h3>
+								<h3 th:if="${!mesgenres.isEmpty()}" class="post-title"
+									th:text="#{music.taste}">Gouts musicaux</h3>
 								<ul th:each="genre: ${mesgenres}">
 									<li th:utext="${genre.genreName}">Classique</li>
 
@@ -73,10 +73,9 @@
 							<hr th:if="${!liste.isEmpty()}" class="my-2" />
 
 							<div class="post-preview row">
-								<h3 th:if="${!liste.isEmpty()}" class="post-title">Je joue
-									du :</h3>
+								<h3 th:if="${!liste.isEmpty()}" class="post-title"
+									th:text="#{play}">Je joue du :</h3>
 							</div>
-
 							<table>
 								<tr th:each="instru: ${liste}">
 
@@ -113,7 +112,7 @@
 						</div>
 					</div>
 					<div th:if="${!user.usersBio.isEmpty()}" class="card description">
-						<h2>Me découvrir</h2>
+						<h2 th:text="#{me}">Me découvrir</h2>
 						<p th:utext="${user.usersBio}"></p>
 						<!--           Modal -->
 						<div class="modal fade" id="modelId" tabindex="-1" role="dialog"
@@ -138,9 +137,8 @@
 						</div>
 
 					</div>
-
-					<h2 th:if="${!evenements.isEmpty()}" style="margin-bottom: 1rem;">Mes
-						évènements</h2>
+					<h2 th:if="${!evenements.isEmpty()}" style="margin-bottom: 1rem;"
+						th:text="#{My.event}">Mes évènements</h2>
 
 					<div class="grid-container">
 						<div th:each="e : ${evenements}" class="grid-item">
@@ -165,13 +163,13 @@
 							</div>
 						</div>
 					</div>
-					<h2 th:if="${!mesamis.isEmpty()}" style="margin-bottom: 1rem;">Mes
-						contacts</h2>
+					<h2 th:if="${!mesamis.isEmpty()}" style="margin-bottom: 1rem;"
+						th:text="#{friends}">Mes contacts</h2>
 					<div class=" grid-container2">
 						<div th:each="a : ${mesamis}" class="grid-item">
 
 							<div class="card h-100">
-								<img th:src="@{${user.photosImagePath}}"
+								<img th:src="@{${a.photosImagePath}}"
 									class="card-img-top mx-auto" alt=imgProfil />
 								<!-- <img
 								src="https://m.onisep.fr/var/onisep/storage/images/_aliases/vignette_search_mobile/media/images/metier_fiches-ideo/musicien/17904799-1-fre-FR/musicien.jpg"
@@ -188,8 +186,8 @@
 					</div>
 
 
-					<h2 th:if="${!mesgroupes.isEmpty()}" style="margin-bottom: 1rem;">Mes
-						groupes</h2>
+					<h2 th:if="${!mesgroupes.isEmpty()}" style="margin-bottom: 1rem;"
+						th;text="#{groupe.my}">Mes groupes</h2>
 					<div class=" grid-container2">
 						<div th:each="gr : ${mesgroupes}" class="grid-item">
 

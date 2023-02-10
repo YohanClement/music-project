@@ -48,9 +48,10 @@
 					<div class="sidenav">
 						<div class="contenue">
 							<div>
-								<h2 th:if="${!groupe.AudioPath.isEmpty()}"
-									class="d-flex align-items-center text-decoration-none border-bottom">Nos
-									réalisations</h2>
+								<!-- th:if="${!groupe.AudioPath.isEmpty()}" -->
+								<h2
+									class="d-flex align-items-center text-decoration-none border-bottom"
+									th:text="#{do}">Nos réalisations</h2>
 								<figure>
 									<audio controls>
 										<source th:src="@{${groupe.AudioPath}}" />
@@ -58,8 +59,8 @@
 								</figure>
 								<div class="post-preview">
 									<h2 th:if="${!NosGenres.isEmpty()}"
-										class="d-flex align-items-center text-decoration-none border-bottom">Nos
-										genres de prédilection</h2>
+										class="d-flex align-items-center text-decoration-none border-bottom"
+										th:text="#{genre.predi}">Nos genres de prédilection</h2>
 									<ul th:each="genre: ${NosGenres}">
 										<li th:utext="${genre.genreName}"></li>
 									</ul>
@@ -73,21 +74,22 @@
 
 					<!-- Main Content-->
 					<div class="card wanted">
-						<h3 th:if="${groupe.groupeIsRecruting} == 'Oui'">Nous
-							recherchons des membres!</h3>
+						<h3 th:if="${groupe.groupeIsRecruting} == 'Oui'"
+							th:text="#{recruting}">Nous recherchons des membres!</h3>
 						<h3 th:unless="${groupe.groupeIsRecruting} == 'Non'"></h3>
 					</div>
 
-					<div th:if="(${groupe.groupeIsRecruting} == 'Oui')" >
+					<div th:if="(${groupe.groupeIsRecruting} == 'Oui')">
 
 						<div style="text-align: center;"
 							th:if=" ${groupe.users.usersId}!= ${user.usersId}">
 							<form th:action="@{/postuler}" method="post">
 								<input type="hidden" th:value="${groupe.groupeId}"
 									th:attr="name='id'" />
-								<div class="card description">
+								<div th:if="${!apply}" class="card description">
 
-									<button class="btn btn-primary" type="submit">Postuler!</button>
+									<button class="btn btn-primary" type="submit"
+										th:text="#{apply}">Postuler!</button>
 								</div>
 							</form>
 						</div>
@@ -97,55 +99,19 @@
 
 
 
-					<div class="card wanted">
-						<div class="card description">
 
-							<div style="text-align: center;"
-								th:if=" ${groupe.users.usersId}== ${user.usersId}">
 
-								<form th:action="@{/postulations}" method="get">
-									<input type="hidden" th:value="${groupe.groupeId}"
-										th:attr="name='id'" />
-									<div class="card description">
-
-										<button class="btn btn-primary" type="submit">List of
-											postulations</button>
-									</div>
-								</form>
-								<table style="table-layout: fixed; width: 100%;"
-									th:if="${postulations}">
-									<tr>
-										<th>User</th>
-										<th>Statut</th>
-										<th>Valider</th>
-										<th>Refuser</th>
-									</tr>
-									<tr th:each="pos:${postulations}">
-										<td th:utext="${pos.getUser()}"></td>
-										<td th:utext="${pos.getStatut()}"></td>
-										<td><a class="active" href="postulationvalider"><i
-												class="fas fa-check"></i></a></td>
-										<td><a class="active"
-											href="postulationrefuser?id=${pos.getPostulationId()}"><i
-												class="fa-solid fa-trash"></i></a></td>
-									</tr>
-								</table>
-							</div>
-
-						</div>
-						<h3 th:unless="${groupe.groupeIsRecruting} == 'non'"></h3>
-					</div>
 
 
 					<div class="card description">
-						<h2>Qui sommes-nous ?</h2>
+						<h2 th:text="#{us}">Qui sommes-nous ?</h2>
 						<p th:utext="${groupe.groupeDescription}" />
 						<p th:utext="'frequence de rencontre '+${groupe.groupeFrequence}" />
 						<p th:text="'Nous contacter : '+${groupe.groupeEmail}">
 					</div>
 
 
-					<h2>Nos Membres</h2>
+					<h2 th:text="#{members}">Nos Membres</h2>
 					<div class="grid-container-groupe">
 						<div th:each="member: ${NosMembres}">
 							<div class="grid-item">
@@ -157,10 +123,11 @@
 										<div class="col-md-8">
 											<div class="card-body">
 
-												<h5 class="card-title"
-													th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">
-													<a th:href="@{/profil?id={id}(id=${member.usersId})}"></a>
-												</h5>
+
+												<a th:href="@{/profils?id={id}(id=${member.usersId})}"><p
+														class="card-title"
+														th:utext="${member.usersFirstName} + ' ' + ${member.usersLastName}">
+													</p></a>
 												<p class="card-text" th:utext="${member.usersBio}">This
 													is a wider card with supporting text below as a natural
 													lead-in to additional content. This content is a little bit
@@ -179,7 +146,51 @@
 					</div>
 
 
+					<div th:if=" ${groupe.users.usersId}== ${user.usersId}">
+						<div class="card wanted">
+							<div class="card description" style="text-align: center;">
+
+								<form th:action="@{/postulations}" method="get">
+									<input type="hidden" th:value="${groupe.groupeId}"
+										th:attr="name='id'" />
+
+
+									<button class="btn btn-primary" type="submit"
+										th:text="#{apply.list}">List of postulations</button>
+								</form>
+
+								<table
+									style="table-layout: fixed; width: 100%; text-align: center"
+									th:if="${postulations}">
+									<tr>
+										<th th:text="#{user}">User</th>
+										<th th:text="#{status}">Statut</th>
+										<th th:text="#{confirm}">Valider</th>
+										<th th:text="#{refuse}">Refuser</th>
+									</tr>
+									<tr th:each="pos:${postulations}">
+										<td th:utext="${pos.getUser()}"></td>
+										<td th:utext="${pos.getStatut()}"></td>
+										<td><form class="active"
+												th:action="@{/postulationvalider}" th:object="${pos}"
+												method="GET">
+												<button type="submit">
+													<i class="fas fa-check"></i>
+												</button>
+												<input type="hidden" th:value="${pos.getPostulationId()}" th:attr="name='id'"/>
+											</form></td>
+										<td><a class="active"
+											href="postulationrefuser?id=${pos.getPostulationId()}"><i
+												class="fa-solid fa-trash"></i></a></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<h3 th:unless="${groupe.groupeIsRecruting} == 'non'"></h3>
 				</div>
+
+
 			</div>
 		</div>
 	</main>

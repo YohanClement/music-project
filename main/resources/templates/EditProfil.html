@@ -31,7 +31,7 @@
 
 		<nav th:replace="header :: nav"></nav>
 		<div class="titre">
-			<h1>Edition profil</h1>
+			<h1 th:text="#{Profile.edit}">Edition profil</h1>
 		</div>
 	</header>
 	<main>
@@ -45,44 +45,47 @@
 							<div class="row gx-5 gx-lg-8 justify-content-center">
 								<div class="col-lg-9">
 									<div class="post-preview">
-										<h2>Qui êtes vous ?</h2>
+										<br>
+										<h2 th:text="#{Qui}">Qui êtes vous ?</h2>
 										<!--Adds a heading to the form-->
 										<div>
-											<label class="form-label" for="">FirstName :</label> <input
-												class="form-control" type="text" name="usersFirstName"
-												size="35" maxlength="35" th:field="*{usersFirstName}"
-												required />
+											<label class="form-label" for="" th:text="#{firstname}">FirstName
+												:</label> <input class="form-control" type="text"
+												name="usersFirstName" size="35" maxlength="35"
+												th:field="*{usersFirstName}" required />
 											<!-- Input type text for small texts, specify size -->
 										</div>
 
 										<div>
-											<label class="form-label" for="">LastName :</label> <input
-												class="form-control" type="text" name="MyusersLastName"
-												size="35" maxlength="35" th:field="*{usersLastName}"
-												required />
+											<label class="form-label" for="" th:text="#{lastname}">LastName
+												:</label> <input class="form-control" type="text"
+												name="MyusersLastName" size="35" maxlength="35"
+												th:field="*{usersLastName}" required />
 											<!-- Input type text for small texts, specify size -->
 										</div>
 
 										<div class="mb-3">
-											<label for="" class="form-label">Adresse Mail</label> <input
-												type="email" class="form-control" name="usersEmail"
-												aria-describedby="emailHelp" th:field="*{usersEmail}"
-												required />
-											<div id="emailHelp" class="form-text">Votre adresse est
+											<label for="" class="form-label" th:text="#{email}">Adresse
+												Mail</label> <input type="email" class="form-control"
+												name="usersEmail" aria-describedby="emailHelp"
+												th:field="*{usersEmail}" required />
+											<div id="emailHelp" class="form-text"
+												th:text="#{email.message}">Votre adresse est
 												confidentielle, nous ne la partageons pas</div>
 										</div>
 
 										<div>
-											<label class="form-label" for="usersZip">Code Postal</label>
-											<input class="postal-code form-control" id="usersZip"
+											<label class="form-label" for="usersZip" th:text="#{Zip}">Code
+												Postal</label> <input class="postal-code form-control" id="usersZip"
 												autocomplete="zip" enterkeyhint="next"
 												th:field="*{usersZip}" />
 										</div>
 										<div>
-											<label class="form-label" id="usersCity">City</label> <input
-												class="form-control" required type="text" id="usersCity"
-												th:field="*{usersCity}" /> <label class="form-label"
-												for="file">Parlez nous de vous</label>
+											<label class="form-label" id="usersCity" th:text="#{City}">City</label>
+											<input class="form-control" required type="text"
+												id="usersCity" th:field="*{usersCity}" /> <label
+												class="form-label" for="file" th:text="#{About}">Parlez
+												nous de vous</label>
 
 											<textarea class="form-control" name="bio" cols="30" rows="4"
 												th:field="*{usersBio}"></textarea>
@@ -93,7 +96,7 @@
 
 									<hr />
 									<div class="post-preview">
-										<h2>De quoi jouez vous ?</h2>
+										<h2 th:text="#{instru.what}">De quoi jouez vous ?</h2>
 
 
 										<select class="form-select" name="instruments">
@@ -101,13 +104,16 @@
 												th:text="${entry.key}"></option>
 										</select><br>
 										<div>
-											<label>Quel est votre niveau ?</label> <input
-												class="form-check-input" type="radio" name="niveau"
-												value="1" checked />Débutant <input type="radio"
-												name="niveau" value="2">Initié <input type="radio"
-												name="niveau" value="3" />Intermédiaire <input type="radio"
-												name="niveau" value="4" />Bon <input type="radio"
-												name="niveau" value="5" />Avancé
+											<label th:text="#{proficiency}">Quel est votre niveau
+												?</label>
+												<br> <input class="form-check-input" type="radio" name="niveau"
+												value="1" checked th:text="#{beginner}" /> <input
+												type="radio" name="niveau" value="2" th:text="#{initiated}">
+											<input type="radio" name="niveau" value="3"
+												th:text="#{intermediate}" /> <input
+												type="radio" name="niveau" value="4" th:text="#{good}" />
+											<input type="radio" name="niveau" value="5"
+												th:text="#{advance}" />
 										</div>
 										<hr />
 									</div>
@@ -132,20 +138,19 @@
 					</div>
 
 					<h2>Votre playlist</h2>-->
-									<h2>Pour mieux vous connaître</h2>
+									<h2 th:text="#{knowmore}"></h2>
 									<div class="post-preview">
-										<label>Sélectionner un fichier image </label> <input
-											class="form-control" type="file" name="image"
-											accept="image/png, image/jpeg" /> <label class="form-label"
-											for="file">Sélectionner un fichier audio</label> <input
-											class="form-control" type="file" name="audios"
-											accept="audio/*" />
-											<br>
+										<label th:text="#{photos.select}">Sélectionner un
+											fichier image </label> <input class="form-control" type="file"
+											name="image" accept="image/png, image/jpeg" /> <label
+											class="form-label" for="file" th:text="#{audio.select}">Sélectionner
+											un fichier audio</label> <input class="form-control" type="file"
+											name="audios" accept="audio/*" /> <br>
 									</div>
 
 									<div class="d-flex justify-content-end mb-4">
-										<button class="btn btn-primary" type="submit">Editer
-											le profil</button>
+										<button class="btn btn-primary" type="submit"
+											th:text="#{submit}">Editer le profil</button>
 									</div>
 								</div>
 							</div>
@@ -153,7 +158,7 @@
 
 					</form>
 				</div>
-					<br>
+				<br>
 			</div>
 		</div>
 	</main>

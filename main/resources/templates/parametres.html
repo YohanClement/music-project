@@ -26,7 +26,7 @@
 		<nav th:replace="header :: nav"></nav>
 
 		<div class="titre">
-			<h1 style="text-align: center">Paramètres</h1>
+			<h1 style="text-align: center" th:text="#{parametres}">Paramètres</h1>
 			<!-- <span class="subheading">ll</span> -->
 		</div>
 	</header>
@@ -37,10 +37,10 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-9">
 				<div class="col-lg-30">
-					<a class="btn btn-primary" type="submit" href="/update">Modifier ce compte</a>
+					<a class="btn btn-primary" type="submit" href="/update" th:text="#{modify}">Modifier ce compte</a>
 					<a class="btn btn-primary" type="submit" href="/delete"
-						onclick="return confirm('confirmez la suppression');">Supprimer ce compte</a>
-					<a class="btn btn-primary" type="submit" href="/logout">Deconnexion</a>
+						onclick="return confirm('confirmez la suppression');" th:text="#{delete}">Supprimer ce compte</a>
+					<a class="btn btn-primary" type="submit" href="/logout" th:text="#{disconnect}">Deconnexion</a>
 				</div>
 			<br>
 
@@ -49,23 +49,23 @@
 							<h2 class="accordion-header" id="headingOne">
 								<button class="accordion-button collapsed" type="button"
 									data-bs-toggle="collapse" data-bs-target="#collapseOne"
-									aria-expanded="false" aria-controls="collapseOne">
+									aria-expanded="false" aria-controls="collapseOne" th:text="#{password.change}">
 									Changer le mot de passe</button>
 							</h2>
 							<div id="collapseOne" class="accordion-collapse collapse"
 								aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
 									<form>
-										<label class="form-label" for="">Mot de passe actuel</label> <input
+										<label class="form-label" for="" th:text="#{password.current}">Mot de passe actuel</label> <input
 											class="form-control" type="password" name="UserName"
 											size="25" maxlength="25" value="" /> <label
-											class="form-label" for="">Nouveau mot de passe</label> <input
+											class="form-label" for="" th:text="#{password.new}">Nouveau mot de passe</label> <input
 											class="form-control" type="password" name="Deptt" size="25"
-											maxlength="25" value="" /> <label class="form-label" for="">Confirmation
+											maxlength="25" value="" /> <label class="form-label" for="" th:text="#{confirm.new}">Confirmation
 											du nouveau mot de passe</label> <input class="form-control"
 											type="password" name="Deptt" size="25" maxlength="25"
 											value="" /><br />
-										<button class="btn btn-primary" type="submit">
+										<button class="btn btn-primary" type="submit" th:text="#{password.change}">
 											Modifier le mot de passe</button>
 									</form>
 								</div>
@@ -76,28 +76,26 @@
 							<h2 class="accordion-header" id="headingTwo">
 								<button class="accordion-button collapsed" type="button"
 									data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-									aria-expanded="false" aria-controls="collapseTwo">
+									aria-expanded="false" aria-controls="collapseTwo" th:text="#{signal}">
 									Emettre un signalement</button>
 							</h2>
 							<div id="collapseTwo" class="accordion-collapse collapse"
 								aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
 									<div class="post-preview">
-										<h6 class="post-title">Saissisez votre remarque</h6>
 										<form>
 											<textarea class="form-control" id="signalement"
 												name="signalement" rows="5" cols="60" maxlength="2000"
 												minlength="100" required></textarea>
 											<br />
-											<button class="btn btn-primary" type="submit">
+											<button class="btn btn-primary" type="submit" th:text="#{submit}">
 												Soumettre</button>
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
-
-						<div class="accordion-item">
+<div class="accordion-item">
 							<h2 class="accordion-header" id="headingThree">
 								<button class="accordion-button collapsed" type="button"
 									data-bs-toggle="collapse" data-bs-target="#collapseThree"

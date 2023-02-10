@@ -33,80 +33,85 @@
 		<nav th:replace="header :: nav"></nav>
 
 		<div class="titre">
-			<h1>Accueil</h1>
+			<h1 th:text="#{Accueil}"></h1>
 		</div>
 
 	</header>
-	<div class="body">
-		<!-- Barre de recherche -->
+	<main>
+		<div class="body">
+			<!-- Barre de recherche -->
 
-		<div class="container-fluid my-2">
-			<form class="input-group" role="search">
-				<input class="form-control me-2" type="search"
-					placeholder="Tappez votre recherche" aria-label="Search">
-				<button class="btn btn-outline-primary" type="submit">Rechercher</button>
-			</form>
-		</div>
-
-
-
-		<div class="homePrincipalblock">
-			<!-- Evènements -->
-			<h2>Evènements qui pourraient vous intéresser</h2>
-
-			<div class="grid-container">
-				<div th:each="event : ${events}" th:if="${eventStat.index} <9"
-					class="grid-item">
-					<div class="card h-100">
-						<h5 class="card-header">
-							<a th:href="@{/pageEvent?id={id}(id=${event.evenementId})}"
-								th:utext="${event.evenementName}"></a>
-						</h5>
-
-						<div class="card-body">
-							<p class="card-text"
-								th:utext="${event.evenementDatedebut} + ' - ' + ${event.evenementDatefin}">
-							</p>
-							<p class="card-text"
-								th:utext="${event.evenementLieu} + ' - ' + ${event.evenementCity}">
-							</p>
-							<p class="card-text" th:utext="${event.evenementBio}"></p>
-						</div>
-
-					</div>
-				</div>
+			<div class="container-fluid my-2">
+				<form class="input-group" role="search">
+					<input class="form-control me-2" type="search"
+						placeholder="Tappez votre recherche" aria-label="Search">
+					<button class="btn btn-outline-primary" type="submit"
+						th:text=#{Search}>Rechercher</button>
+				</form>
 			</div>
 
-			<div >
-				
-				<h2 th:if="${!evenements.isEmpty()}" style="margin-bottom: 1rem;">Mes évènements</h2>
+
+
+			<div class="homePrincipalblock">
+				<!-- Evènements -->
+				<h2 th:text="#{Evenement.interest}">Evènements qui pourraient
+					vous intéresser</h2>
 
 				<div class="grid-container">
-					<div th:each="e : ${evenements}" class="grid-item">
+					<div th:each="event : ${events}" th:if="${eventStat.index} <9"
+						class="grid-item">
 						<div class="card h-100">
 							<h5 class="card-header">
-								<a href="Event.html"
-									th:href="@{/pageEvent?id={id}(id=${e.evenementId})}"
-									th:utext="${e.evenementName}">Concert lyrique à l'opéra de
-									Blois</a>
+								<a th:href="@{/pageEvent?id={id}(id=${event.evenementId})}"
+									th:utext="${event.evenementName}"></a>
 							</h5>
 
 							<div class="card-body">
 								<p class="card-text"
-									th:utext="${e.evenementDatedebut} + ' - ' + ${e.evenementDatefin}">
+									th:utext="${event.evenementDatedebut} + ' - ' + ${event.evenementDatefin}">
 								</p>
 								<p class="card-text"
-									th:utext="${e.evenementLieu} + ' - ' + ${e.evenementCity}">
+									th:utext="${event.evenementLieu} + ' - ' + ${event.evenementCity}">
 								</p>
-								<p class="card-text" th:utext="${e.evenementBio}"></p>
+								<p class="card-text" th:utext="${event.evenementBio}"></p>
 							</div>
 
 						</div>
 					</div>
 				</div>
+
+				<div>
+
+					<h2 th:if="${!evenements.isEmpty()}" style="margin-bottom: 1rem;"
+						th:text=#{Event.mine}>Mes évènements</h2>
+
+					<div class="grid-container">
+						<div th:each="e : ${evenements}" class="grid-item">
+							<div class="card h-100">
+								<h5 class="card-header">
+									<a href="Event.html"
+										th:href="@{/pageEvent?id={id}(id=${e.evenementId})}"
+										th:utext="${e.evenementName}">Concert lyrique à l'opéra de
+										Blois</a>
+								</h5>
+
+								<div class="card-body">
+									<p class="card-text"
+										th:utext="${e.evenementDatedebut} + ' - ' + ${e.evenementDatefin}">
+									</p>
+									<p class="card-text"
+										th:utext="${e.evenementLieu} + ' - ' + ${e.evenementCity}">
+									</p>
+									<p class="card-text" th:utext="${e.evenementBio}"></p>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</main>
 
 	<script type="text/javascript"
 		src="node_modules/mdbootstrap/js/jquery.min.js"></script>

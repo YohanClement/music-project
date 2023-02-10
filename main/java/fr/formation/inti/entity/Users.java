@@ -19,6 +19,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -50,7 +51,8 @@ public class Users implements java.io.Serializable {
 	private Set<Evenement> evenements = new HashSet<Evenement>(0);
 	private Set<Groupe> groupes = new HashSet<Groupe>(0);
 	private Set<GroupeMembers> groupeMemberses = new HashSet<GroupeMembers>(0);
-
+	private Set<Postulations> postulationses = new HashSet<Postulations>(0);
+	
 	public Users() {
 	}
 
@@ -97,8 +99,9 @@ public class Users implements java.io.Serializable {
 		this.usersId = usersId;
 	}
 
-	@NotBlank(message = "{required}")
-	@Size(min = 6, max = 20, message = "{password}")
+	@NotBlank(message = "{required1}")
+	//@NotNull(message = "{required1}")
+	//@Size(min = 6, max = 20, message = "{password}")
 	@Column(name = "Password", nullable = false, length = 200)
 	public String getPassword() {
 		return this.password;
@@ -108,8 +111,8 @@ public class Users implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@NotBlank(message = "{required}")
-	@Size(min = 2, max = 50, message = "{size}")
+	@NotBlank(message = "{required1}")
+	@Size(min = 2, max = 50, message = "{sizee}")
 	@Column(name = "Users_firstname", nullable = false, length = 500)
 	public String getUsersFirstName() {
 		return this.usersFirstName;
@@ -119,8 +122,8 @@ public class Users implements java.io.Serializable {
 		this.usersFirstName = usersFirstName;
 	}
 
-	@NotBlank(message = "{required}")
-	@Size(min = 2, max = 50, message = "{size}")
+	@NotBlank(message = "{required1}")
+	@Size(min = 2, max = 50, message = "{sizee}")
 	@Column(name = "Users_lastname", nullable = false, length = 500)
 	public String getUsersLastName() {
 		return this.usersLastName;
@@ -149,7 +152,9 @@ public class Users implements java.io.Serializable {
 		this.usersEmail = usersEmail;
 	}
 
-	@NotEmpty(message = "{required}")
+	//@NotBlank(message = "{required1}")
+	//@Size(min=10, max = 2000, message = "{sizee}")
+	//@NotEmpty(message = "{required1}")
 	@Column(name = "Users_bio", length = 2000)
 	public String getUsersBio() {
 		return this.usersBio;
@@ -169,7 +174,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	
-	@NotEmpty(message = "{required}")
+	//@NotEmpty(message = "{required1}")
 	@Column(name = "Users_City", length = 200)
 	public String getUsersCity() {
 		return this.usersCity;
@@ -312,6 +317,25 @@ public class Users implements java.io.Serializable {
 	public void setUsersEvenements(Set<UsersEvenement> usersEvenements) {
 		this.usersEvenements = usersEvenements;
 	}
+	
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
+	public Set<Postulations> getPostulationses() {
+		return postulationses;
+	}
+
+	public void setPostulationses(Set<Postulations> postulationses) {
+		this.postulationses = postulationses;
+	}
+
+	@Override
+	public String toString() {
+		return " " + usersFirstName + " " + usersLastName + " Email= "
+				+ usersEmail + " ";
+	}
+	
+	
 	
 	
 

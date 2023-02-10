@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -55,15 +55,19 @@ public class GroupeController {
 
 	@Autowired
 	private GenreGroupeRepository ggRep;
-	
+
+	@Autowired
+	private PostulationRepository postRep;
+
 	@GetMapping("/pagegroupe")
 	public String viewgroupepage(Model model) {
 		return "creationgroupe";
 	}
 
 	@PostMapping("/creationgroupe")
-	public String addGroupPost(Groupe groupe,@RequestParam("genre") String genre, @RequestParam("image") MultipartFile multipartFile,
-			@RequestParam("audios") MultipartFile multipartFile1) throws IOException {
+	public String addGroupPost(Groupe groupe, @RequestParam("genre") String genre,
+			@RequestParam("image") MultipartFile multipartFile, @RequestParam("audios") MultipartFile multipartFile1,
+			Principal principal) throws IOException {
 		System.out.println(groupe);
 
 		// permet de changer en chaine de caracter pour savoir si le groupe recrute
@@ -91,23 +95,23 @@ public class GroupeController {
 		}
 		System.out.println("photos après :" + groupe.getPhotos());
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+		// Object principal =
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = ur.findByEmail(username);
 
 		groupe.setUsers(activeuser);
 
 		Groupe savedGroupe = grouperep.save(groupe);
-		
-		
+
 		GroupeMembers gm = new GroupeMembers(savedGroupe, activeuser);
 
 		gmRep.save(gm);
-		
-		GenreMusic genre1 =  gmr.findByGenreName(genre);
-		
+
+		GenreMusic genre1 = gmr.findByGenreName(genre);
+
 		GenreGroupe ggroupe = new GenreGroupe(genre1, savedGroupe);
-		
+
 		ggRep.save(ggroupe);
 
 		// pour créer le chemin de la photo
@@ -120,14 +124,20 @@ public class GroupeController {
 		FileUploadUtil.saveFile(uploadDir1, fileName1, multipartFile1);
 
 		// metttre l'audio
-		return "accueillogged";
+		return "redirect:/accueillogged";
 
 	}
 
 	@GetMapping("/groupe")
-	public String viewgrouppage(@RequestParam("id") Integer id, Model model, HttpSession session) {
+	public String viewgrouppage(@RequestParam("id") Integer id, Model model, HttpSession session, Principal principal) {
 		// afficher selon id
 		Groupe gr = grouperep.findById(id).get();
+
+		// Object principal =
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
+		Users activeuser = ur.findByEmail(username);
+		
 		Set<GenreGroupe> style = gr.getGenreGroupes();
 		List<GenreMusic> genre = new ArrayList<GenreMusic>();
 		for (GenreGroupe g : style) {
@@ -141,7 +151,7 @@ public class GroupeController {
 		for (GroupeMembers user : nous) {
 			Integer id2 = user.getUsers().getUsersId();
 			Users u = ur.findById(id2).get();
-			 members.add(u);
+			members.add(u);
 		}
 
 		Set<AudioGroupe> ag = gr.getAudioGroupes();
@@ -150,12 +160,31 @@ public class GroupeController {
 //			String a = sono.getAudioName();
 //		}
 
+		List<Postulations> list_postu = postRep.findAllByGroupe(gr);
+		boolean apply = false;
+
+		for (int i = 0; i < list_postu.size(); i++) {
+
+			if (list_postu.get(i).getUsers().getUsersId() == activeuser.getUsersId()) {
+				apply = true;
+			}
+		}
+		
+		List<GroupeMembers> groupemembers = gmRep.findAllByGroupe(gr);
+		for(int i = 0; i < groupemembers.size(); i++) {
+			
+			if (groupemembers.get(i).getUsers().getUsersId() == activeuser.getUsersId()) {
+				apply = true;
+			}
+		}
+		
+
+		model.addAttribute("apply", apply);
+
 		model.addAttribute("groupe", gr);
 		model.addAttribute("NosGenres", genre);
 		model.addAttribute("NosMembres", members);
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
-		Users activeuser = ur.findByEmail(username);
+		// Object principal =
 		model.addAttribute("user", activeuser);
 		model.addAttribute("postulations", session.getAttribute("postulations"));
 		return "groupe";
@@ -235,29 +264,38 @@ public class GroupeController {
 	public String viewpostulations(Model model, HttpSession session, @RequestParam("id") Integer id) {
 		System.out.println(id);
 		Groupe gr = grouperep.findById(id).get();
-		List<Postulations> lpostulations = postRepo.findAllByGroupe(gr);
-		if (lpostulations.size() > 0) {
-
+		List<Postulations> lpostulations2 = postRepo.findAllByGroupe(gr);
+		if (lpostulations2.size() > 0) {
+			List<Postulations> lpostulations = new ArrayList<>();
+			for(int i = 0; i < lpostulations2.size(); i++) {
+				if (lpostulations2.get(i).getStatut().equals("en attente")){
+					lpostulations.add(lpostulations2.get(i));
+				}
+				
+			}
 			model.addAttribute("postulations", lpostulations);
-			System.out.println("La postulation est : "+lpostulations);
 			session.setAttribute("postulations", lpostulations);
-			
 		}
-		String str= id.toString();
+		
+		
+		
+		String str = id.toString();
 		System.out.println(str);
-		return "redirect:/groupe?id="+str;
+		return "redirect:/groupe?id=" + str;
 	}
 
 	@GetMapping("/postulationvalider")
-	public String validerpostulation(Model model) {
+	public String validerpostulation(Model model, Postulations pos, @RequestParam("id") Integer id) {
 //		public String validerpostulation(Model model, @RequestParam("id") Integer id) {
-		Postulations post = postRepo.findById(2).get();
+		System.out.println(id);
+		System.out.println("Id postulation"+pos.getPostulationsId());
+		Postulations post = postRepo.findById(id).get();
 		System.out.println(post.toString());
 		post.setStatut("oui");
 		postRepo.save(post);
 
 		// Users user = ur.findByEmail(post.)
-		Users user = ur.findByEmail(post.getUser().getUsersEmail());
+		Users user = ur.findByEmail(post.getUsers().getUsersEmail());
 		Groupe groupe = grouperep.findById(post.getGroupe().getGroupeId()).get();
 		System.out.println(groupe.getGroupeId());
 		GroupeMembers gmembers = new GroupeMembers(groupe, user);
@@ -268,14 +306,17 @@ public class GroupeController {
 		// mettre a jour groupe member et lui mettre 1 membre mini par groupe (le créa)
 		// + mettre un groupe createur pr chaque groupe
 
-		return "redirect:/postulations";
+		String str = post.getGroupe().getGroupeId().toString();
+		System.out.println(str);
+		return "redirect:/groupe?id=" + str;
 
 	}
 
 	@PostMapping("/postuler")
-	public String postuler1(@RequestParam("id") Integer id) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails) principal).getUsername();
+	public String postuler1(@RequestParam("id") Integer id, Principal principal) {
+		// Object principal =
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = principal.getName();
 		Users activeuser = ur.findByEmail(username);
 		Groupe groupe = grouperep.findById(id).get();
 		System.out.println(id);
